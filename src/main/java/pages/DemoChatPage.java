@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 public class DemoChatPage {
 
     private WebDriver driver;
-    DriverManager driverManager;
+    private DriverManager driverManager;
 
     public DemoChatPage(WebDriver driver) {
         this.driver = driver;
