@@ -45,24 +45,29 @@ public class DemoChatStep {
 
     public DemoChatStep fillInProfile(String name, String email, String photo){
         demoChatPage.clickSettingButton().typeUserName(name).typeUserEmail(email)
-                .typePhotoUrl(photo).clcikSaveButton();
+                .typePhotoUrl(photo).clickSaveButton();
+        return this;
+    }
+
+    public DemoChatStep fillInUserName(String username){
+        demoChatPage.clickSettingButton().typeUserName(username).clickSaveButton();
         return this;
     }
 
     public void checkProfileData(String name, String email, String photo){
         demoChatPage.clickSettingButton();
-        Assert.assertTrue(demoChatPage.checkUserName(name));
-        Assert.assertTrue(demoChatPage.checkUserEmail(email));
-        Assert.assertTrue(demoChatPage.checkPhotoUrl(photo));
+        Assert.assertTrue(demoChatPage.checkProfileName(name));
+        Assert.assertTrue(demoChatPage.checkProfileEmail(email));
+        Assert.assertTrue(demoChatPage.checkProfilePhotoUrl(photo));
     }
 
-    public DemoChatStep checkUserName(String name){
-        Assert.assertTrue(demoChatPage.checkName(name));
+    public DemoChatStep checkMainName(String name){
+        Assert.assertTrue(demoChatPage.checkMainName(name));
         return this;
     }
 
-    public DemoChatStep checkUserPhoto(String photo){
-        Assert.assertTrue(demoChatPage.checkPhoto(photo));
+    public DemoChatStep checkMainPhoto(String photo){
+        Assert.assertTrue(demoChatPage.checkMainPhotoUrl(photo));
         return this;
     }
 }

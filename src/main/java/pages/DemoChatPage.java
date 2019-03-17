@@ -45,19 +45,29 @@ public class DemoChatPage extends Page {
         return this;
     }
 
-    public boolean checkName(String value) {
-        System.out.println("Actuall: " + value);
-        System.out.println("Current: " + driver.findElement(NAME).getText());
+    public boolean checkMainName(String value) {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(OVERLAPS_WINDOW));
         return driver.findElement(NAME).getText().equals(value);
     }
 
-    public boolean checkPhoto(String value) {
-        return driver.findElement(PHOTO).getCssValue("background-image").equals(value);
+    public boolean checkMainPhotoUrl(String value) {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(OVERLAPS_WINDOW));
+        return getBackgroundImageUrl(driver.findElement(PHOTO).getCssValue("background-image")).equals(value);
+    }
+
+    private String getBackgroundImageUrl(String imageUrl) {
+        imageUrl = imageUrl.substring(imageUrl.indexOf("\"") + 1, imageUrl.lastIndexOf("\""));
+        return imageUrl;
     }
 
     public DemoChatPage typeUserName(String userName) {
         driver.findElement(NAME_FIELD).clear();
         driver.findElement(NAME_FIELD).sendKeys(userName);
+        return this;
+    }
+
+    public DemoChatPage clearUserName(String userName) {
+        driver.findElement(NAME_FIELD).clear();
         return this;
     }
 
@@ -73,21 +83,21 @@ public class DemoChatPage extends Page {
         return this;
     }
 
-    public DemoChatPage clcikSaveButton() {
+    public DemoChatPage clickSaveButton() {
         driver.findElement(SAVE_BUTTON).click();
         return this;
     }
 
-    public boolean checkUserName(String value) {
+    public boolean checkProfileName(String value) {
         String userName = driver.findElement(NAME_FIELD).getAttribute("value");
-        return userName.replace("Guest", "").equals(value);
+        return userName.equals(value);
     }
 
-    public boolean checkUserEmail(String value) {
+    public boolean checkProfileEmail(String value) {
         return driver.findElement(EMAIL_FIELD).getAttribute("value").equals(value);
     }
 
-    public boolean checkPhotoUrl(String value) {
+    public boolean checkProfilePhotoUrl(String value) {
         return driver.findElement(URL_FIELD).getAttribute("value").equals(value);
     }
 

@@ -12,7 +12,11 @@ public class Data {
     private static final String USER_EMAIL = "test@gmail.com";
     private static final String EDITING_USER_EMAIL = "test123@gmail.com";
     private static final String PHOTO_URL = "https://www.seleniumhq.org/images/big-logo.png";
-    private static final String EDITING_PHOTO_URL = "https://focus.ua/modules/thumb.php?u=../files/SABi/2017/025/2615387.jpg&m=c_large_wide";
+    private static final String EDITING_PHOTO_URL = "https://focus.ua/modules/thumb.php?u=../files/SABi/2017/025/2615387" +
+            ".jpg&m=c_large_wide";
+    private static final String DEFAULT_NAME = "Anonymous";
+
+    public static String getDefaultName() { return DEFAULT_NAME; }
 
     public static String getUserName() {
         return USER_NAME;

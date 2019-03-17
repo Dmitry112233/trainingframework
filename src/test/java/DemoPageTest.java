@@ -41,14 +41,14 @@ public class DemoPageTest {
     }
 
     @Test
-    public void checkDemoVersionWindowAppeared() {
+    public void checkDemoVersionWindowTest() {
         demoChatStep.sendTenMessage().checkDemoVersionWindowIsDisplayed();
     }
 
     @Test
     public void fillInProfileTest(){
         demoChatStep.fillInProfile(Data.getUserName(), Data.getUserEmail(), Data.getPhotoUrl())
-                .checkUserName(Data.getUserName()).checkUserPhoto(Data.getPhotoUrl())
+                .checkMainName(Data.getUserName()).checkMainPhoto(Data.getPhotoUrl())
         .checkProfileData(Data.getUserName(), Data.getUserEmail(), Data.getPhotoUrl());
     }
 
@@ -56,9 +56,15 @@ public class DemoPageTest {
     public void editProfileTest(){
         demoChatStep.fillInProfile(Data.getUserName(), Data.getUserEmail(), Data.getPhotoUrl())
                 .fillInProfile(Data.getEditingUserName(), Data.getEditingUserEmail(), Data.getEditingPhotoUrl())
+                .checkMainName(Data.getEditingUserName()).checkMainPhoto(Data.getEditingPhotoUrl())
                 .checkProfileData(Data.getEditingUserName(), Data.getEditingUserEmail(), Data.getEditingPhotoUrl());
-
     }
+
+    @Test
+    public void removeUserNameTest(){
+        demoChatStep.fillInUserName(Data.getUserName()).fillInUserName("").checkMainName(Data.getDefaultName());
+    }
+
     @AfterMethod
     public void quite() {
        driverManager.quitWebDriver();
