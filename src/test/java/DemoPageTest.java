@@ -35,7 +35,7 @@ public class DemoPageTest {
 
     @Test
     public void editMessageTest() {
-        demoChatSteps.sendMessage(Data.MESSAGE).editLastOwnMessage(Data.EDITING_MESSAGE).checkLastMessage(Data.EDITING_MESSAGE);
+        demoChatSteps.sendMessage(Data.MESSAGE).editLastOwnMessage(Data.EDITING_MESSAGE).checkLastEditingMessage(Data.EDITING_MESSAGE);
     }
 
     @Test

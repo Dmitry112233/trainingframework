@@ -20,6 +20,10 @@ public class DemoChatSteps {
         Assert.assertEquals(demoChatPage.getOwnLastMessageText(), message);
     }
 
+    public void checkLastEditingMessage(String message){
+        Assert.assertEquals(demoChatPage.getOwnLastEditingMessage(), message);
+    }
+
     public DemoChatSteps removeLastOwnMessage() {
         demoChatPage.clickRemoveButtonForOwnLastMessage().acceptAlert();
         return this;

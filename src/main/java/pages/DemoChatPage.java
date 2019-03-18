@@ -69,7 +69,11 @@ public class DemoChatPage extends Page {
 
     public String getLastAttachment() {
         List<WebElement> attachments = getAttachmentList();
-        return attachments.get(attachments.size() - 1).getText().split(" ")[0];
+        if(attachments.size() > 0 ) {
+            return attachments.get(attachments.size() - 1).getText().split(" ")[0];
+        }else {
+            return "There isn't attachment";
+        }
     }
 
     public DemoChatPage clickStartButton() {
@@ -183,6 +187,14 @@ public class DemoChatPage extends Page {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String getOwnLastEditingMessage(){
+        List<WebElement> messages = getMessageList();
+        WebElement mess = messages.get(messages.size()-1);
+        System.out.println(mess.getCssValue("content"));
+        wait.until(ExpectedConditions.attributeToBeNotEmpty(mess, "content"));
+        return mess.getText();
     }
 
     public boolean checkDemoVersionWindowIsDisplayed() {
