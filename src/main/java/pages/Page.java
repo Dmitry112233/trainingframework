@@ -7,7 +7,7 @@ public class Page {
 
     protected WebDriver driver;
 
-    public WebDriverWait wait;
+    protected WebDriverWait wait;
 
     protected Page(WebDriver driver){
         this.driver = driver;

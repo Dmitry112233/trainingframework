@@ -34,6 +34,8 @@ public class DemoChatPage extends Page {
     private static final By OVERLAPS_WINDOW = By.xpath("//div[@class='integri-modal integri-modal-shown']");
     private static final By NAME = By.xpath("//div[@class='integri-session-user-name']");
     private static final By PHOTO = By.xpath("//div[@class='integri-chat-session']/div[1]");
+    private static final By INPUT_FILE = By.xpath("//input[@type='file']");
+    private static final By START_BUTTON = By.xpath("//button[contains(@class, 'integri-file-upload-start')]");
 
     public DemoChatPage typeMessage(String message) {
         try {
@@ -42,6 +44,17 @@ public class DemoChatPage extends Page {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        return this;
+    }
+
+    public DemoChatPage addFile(String filePath){
+        driver.findElement(INPUT_FILE).sendKeys(filePath);
+        driver.findElement(INPUT_FILE).sendKeys(filePath);
+        return this;
+    }
+
+    public DemoChatPage clickStartButton(){
+        driver.findElement(START_BUTTON).click();
         return this;
     }
 
@@ -63,11 +76,6 @@ public class DemoChatPage extends Page {
     public DemoChatPage typeUserName(String userName) {
         driver.findElement(NAME_FIELD).clear();
         driver.findElement(NAME_FIELD).sendKeys(userName);
-        return this;
-    }
-
-    public DemoChatPage clearUserName(String userName) {
-        driver.findElement(NAME_FIELD).clear();
         return this;
     }
 

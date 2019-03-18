@@ -70,4 +70,9 @@ public class DemoChatStep {
         Assert.assertTrue(demoChatPage.checkMainPhotoUrl(photo));
         return this;
     }
+
+    public DemoChatStep sendFile(String filePath){
+        demoChatPage.clcikDragAndDropButton().addFile(filePath).clickStartButton();
+        return this;
+    }
 }

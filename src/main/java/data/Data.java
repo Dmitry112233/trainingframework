@@ -16,6 +16,12 @@ public class Data {
             ".jpg&m=c_large_wide";
     private static final String DEFAULT_NAME = "Anonymous";
 
+    private static final String FILE_PATH_TXT = "D:\\new 1.txt";
+
+    public static String getFilePathTxt() {
+        return FILE_PATH_TXT;
+    }
+
     public static String getDefaultName() { return DEFAULT_NAME; }
 
     public static String getUserName() {

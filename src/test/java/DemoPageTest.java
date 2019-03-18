@@ -65,8 +65,13 @@ public class DemoPageTest {
         demoChatStep.fillInUserName(Data.getUserName()).fillInUserName("").checkMainName(Data.getDefaultName());
     }
 
+    @Test
+    public void sendFileTest(){
+        demoChatStep.sendFile(Data.getFilePathTxt());
+    }
+
     @AfterMethod
     public void quite() {
-       driverManager.quitWebDriver();
+    //   driverManager.quitWebDriver();
     }
 }
