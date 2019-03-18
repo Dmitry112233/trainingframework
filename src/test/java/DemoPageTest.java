@@ -7,14 +7,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.DemoChatPage;
-import steps.DemoChatStep;
+import steps.DemoChatSteps;
 import utils.PropertyReader;
 
 import java.util.concurrent.TimeUnit;
 
 public class DemoPageTest {
 
-    private DemoChatStep demoChatStep;
+    private DemoChatSteps demoChatSteps;
     private WebDriver driver;
     private DriverManager driverManager;
 
@@ -24,84 +24,84 @@ public class DemoPageTest {
         driver = driverManager.getWebDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.get(PropertyReader.getInstance().get("stage"));
-        demoChatStep = new DemoChatStep(new DemoChatPage(driver));
+        driver.get(PropertyReader.getInstance().get("url.path.dev"));
+        demoChatSteps = new DemoChatSteps(new DemoChatPage(driver));
     }
 
     @Test
     public void sendMessageTest() {
-        demoChatStep.sendMessage().checkLastMessage(Data.getMessage());
+        demoChatSteps.sendMessage(Data.MESSAGE).checkLastMessage(Data.MESSAGE);
     }
 
     @Test
     public void editMessageTest() {
-        demoChatStep.sendMessage().editLastOwnMessage().checkLastMessage(Data.getEditingMessage());
+        demoChatSteps.sendMessage(Data.MESSAGE).editLastOwnMessage(Data.EDITING_MESSAGE).checkLastMessage(Data.EDITING_MESSAGE);
     }
 
     @Test
     public void removeMessageTest() {
-        demoChatStep.sendMessage().removeLastOwnMessage().checkLastMessage(Data.getRemovedMessage());
+        demoChatSteps.sendMessage(Data.MESSAGE).removeLastOwnMessage().checkLastMessage(Data.REMOVED_MESSAGE);
     }
 
     @Test
     public void checkDemoVersionWindowTest() {
-        demoChatStep.sendTenMessage().checkDemoVersionWindowIsDisplayed();
+        demoChatSteps.sendTenMessages(Data.MESSAGE).checkDemoVersionWindowIsDisplayed();
     }
 
     @Test
     public void fillInProfileTest() {
-        demoChatStep.fillInProfile(Data.getUserName(), Data.getUserEmail(), Data.getPhotoUrl())
-                .checkMainName(Data.getUserName()).checkMainPhoto(Data.getPhotoUrl())
-                .checkProfileData(Data.getUserName(), Data.getUserEmail(), Data.getPhotoUrl());
+        demoChatSteps.fillInProfile(Data.USER_NAME, Data.USER_EMAIL, Data.PHOTO_URL)
+                .checkMainName(Data.USER_NAME).checkMainPhoto(Data.PHOTO_URL)
+                .checkProfileData(Data.USER_NAME, Data.USER_EMAIL, Data.PHOTO_URL);
     }
 
     @Test
     public void editProfileTest() {
-        demoChatStep.fillInProfile(Data.getUserName(), Data.getUserEmail(), Data.getPhotoUrl())
-                .fillInProfile(Data.getEditingUserName(), Data.getEditingUserEmail(), Data.getEditingPhotoUrl())
-                .checkMainName(Data.getEditingUserName()).checkMainPhoto(Data.getEditingPhotoUrl())
-                .checkProfileData(Data.getEditingUserName(), Data.getEditingUserEmail(), Data.getEditingPhotoUrl());
+        demoChatSteps.fillInProfile(Data.USER_NAME, Data.USER_EMAIL, Data.PHOTO_URL)
+                .fillInProfile(Data.EDITING_USER_NAME, Data.EDITING_USER_EMAIL, Data.EDITING_PHOTO_URL)
+                .checkMainName(Data.EDITING_USER_NAME).checkMainPhoto(Data.EDITING_PHOTO_URL)
+                .checkProfileData(Data.EDITING_USER_NAME, Data.EDITING_USER_EMAIL, Data.EDITING_PHOTO_URL);
     }
 
     @Test
     public void removeUserNameTest() {
-        demoChatStep.fillInUserName(Data.getUserName()).fillInUserName("").checkMainName(Data.getDefaultName());
+        demoChatSteps.fillInUserName(Data.USER_NAME).fillInUserName("").checkMainName(Data.DEFAULT_NAME);
     }
 
     @Test
     public void sendFileTxtTest() {
-        demoChatStep.clickDragAndDropButton().addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file_txt"))
+        demoChatSteps.clickDragAndDropButton().addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path"))
                 .clickStartButton()
-                .checkLastAttachment(PropertyReader.getInstance().getFileName("file_txt"));
+                .checkLastAttachment(PropertyReader.getInstance().getFileName("file.txt.path"));
     }
 
     @Test
     public void sendFilePngTest() {
-        demoChatStep.clickDragAndDropButton().addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file_png"))
+        demoChatSteps.clickDragAndDropButton().addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.png.path"))
                 .clickStartButton()
-                .checkLastAttachment(PropertyReader.getInstance().getFileName("file_png"));
+                .checkLastAttachment(PropertyReader.getInstance().getFileName("file.png.path"));
     }
 
     @Test
     public void sendFileExeTest() {
-        demoChatStep.clickDragAndDropButton().addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file_exe"))
+        demoChatSteps.clickDragAndDropButton().addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.exe.path"))
                 .clickStartButton()
-                .checkLastAttachment(PropertyReader.getInstance().getFileName("file_exe"));
+                .checkLastAttachment(PropertyReader.getInstance().getFileName("file.exe.path"));
     }
 
     @Test
     public void sendFilesTest() {
-        demoChatStep.clickDragAndDropButton().addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file_txt"))
-                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file_txt"))
-                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file_txt"))
-                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file_txt"))
-                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file_txt"))
+        demoChatSteps.clickDragAndDropButton().addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path"))
+                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path"))
+                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path"))
+                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path"))
+                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path"))
                 .clickStartButton()
-                .checkAttachmentSize(Data.getAttachmentSize());
+                .checkAttachmentSize(Data.ATTACHMENT_SIZE);
     }
 
     @AfterMethod
-    public void quite() {
+    public void quit() {
         driverManager.quitWebDriver();
     }
 }

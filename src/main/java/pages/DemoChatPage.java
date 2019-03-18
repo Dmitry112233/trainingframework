@@ -57,23 +57,19 @@ public class DemoChatPage extends Page {
         return driver.findElements(ATTACHMENT_FILES);
     }
 
-    public boolean checkAttachmentSize(int size) {
+    public int getAttachmentSize() {
         try {
             Thread.sleep(2000);
-            if (getAttachmentList().size() == size) {
-                return true;
-            } else {
-                return false;
-            }
+            return  getAttachmentList().size();
         } catch (InterruptedException e) {
             e.printStackTrace();
-            return false;
+            return -1;
         }
     }
 
-    public boolean checkLastAttachment(String value) {
+    public String getLastAttachment() {
         List<WebElement> attachments = getAttachmentList();
-        return attachments.get(attachments.size() - 1).getText().split(" ")[0].equals(value);
+        return attachments.get(attachments.size() - 1).getText().split(" ")[0];
     }
 
     public DemoChatPage clickStartButton() {
@@ -81,14 +77,14 @@ public class DemoChatPage extends Page {
         return this;
     }
 
-    public boolean checkMainName(String value) {
+    public String getMainName() {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(OVERLAPS_NAME_WINDOW));
-        return driver.findElement(NAME).getText().equals(value);
+        return driver.findElement(NAME).getText();
     }
 
-    public boolean checkMainPhotoUrl(String value) {
+    public String getMainPhotoUrl() {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(OVERLAPS_NAME_WINDOW));
-        return getBackgroundImageUrl(driver.findElement(PHOTO).getCssValue("background-image")).equals(value);
+        return getBackgroundImageUrl(driver.findElement(PHOTO).getCssValue("background-image"));
     }
 
     private String getBackgroundImageUrl(String imageUrl) {
@@ -119,17 +115,16 @@ public class DemoChatPage extends Page {
         return this;
     }
 
-    public boolean checkProfileName(String value) {
-        String userName = driver.findElement(NAME_FIELD).getAttribute("value");
-        return userName.equals(value);
+    public String getProfileName() {
+        return driver.findElement(NAME_FIELD).getAttribute("value");
     }
 
-    public boolean checkProfileEmail(String value) {
-        return driver.findElement(EMAIL_FIELD).getAttribute("value").equals(value);
+    public String getProfileEmail() {
+        return driver.findElement(EMAIL_FIELD).getAttribute("value");
     }
 
-    public boolean checkProfilePhotoUrl(String value) {
-        return driver.findElement(URL_FIELD).getAttribute("value").equals(value);
+    public String getProfilePhotoUrl() {
+        return driver.findElement(URL_FIELD).getAttribute("value");
     }
 
     public DemoChatPage clickSendButton() {
@@ -179,14 +174,14 @@ public class DemoChatPage extends Page {
         return driver.findElements(OWN_MESSAGE_LIST);
     }
 
-    public boolean checkOwnLastMessageText(String value) {
+    public String getOwnLastMessageText() {
         try {
             Thread.sleep(500);
             List<WebElement> messages = getMessageList();
-            return messages.get(messages.size() - 1).getAttribute("innerHTML").equals(value);
+            return messages.get(messages.size() - 1).getText();
         } catch (InterruptedException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
