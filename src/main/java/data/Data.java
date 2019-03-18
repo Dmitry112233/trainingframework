@@ -2,11 +2,9 @@ package data;
 
 public class Data {
 
-    private static final String DEMO_CHAT_URL = "https://dev.integrivideo.com/demo/chat/new";
     private static final String MESSAGE = "Aa((+_sФ  Dы в2312%:? *())_";
     private static final String EDITING_MESSAGE = "QqФЫВй 31 :?!(№!)";
     private static final String REMOVED_MESSAGE = "removed...";
-
     private static final String USER_NAME = "ASdas Фвым 123 %^@!(";
     private static final String EDITING_USER_NAME = "%^ *&ASD asd12 3";
     private static final String USER_EMAIL = "test@gmail.com";
@@ -16,10 +14,10 @@ public class Data {
             ".jpg&m=c_large_wide";
     private static final String DEFAULT_NAME = "Anonymous";
 
-    private static final String FILE_PATH_TXT = "D:\\new 1.txt";
+    private static final int ATTACHMENT_SIZE = 5;
 
-    public static String getFilePathTxt() {
-        return FILE_PATH_TXT;
+    public static int getAttachmentSize() {
+        return ATTACHMENT_SIZE;
     }
 
     public static String getDefaultName() { return DEFAULT_NAME; }
@@ -50,10 +48,6 @@ public class Data {
 
     public static String getRemovedMessage() {
         return REMOVED_MESSAGE;
-    }
-
-    public static String getDemoChatUrl() {
-        return DEMO_CHAT_URL;
     }
 
     public static String getMessage() {

@@ -71,8 +71,26 @@ public class DemoChatStep {
         return this;
     }
 
-    public DemoChatStep sendFile(String filePath){
-        demoChatPage.clcikDragAndDropButton().addFile(filePath).clickStartButton();
+    public DemoChatStep clickDragAndDropButton(){
+        demoChatPage.clickDragAndDropButton();
         return this;
+    }
+
+    public DemoChatStep addFile(String filePath){
+        demoChatPage.addFile(filePath);
+        return this;
+    }
+
+    public DemoChatStep clickStartButton(){
+        demoChatPage.clickStartButton();
+        return this;
+    }
+
+    public void checkLastAttachment(String fileName){
+        Assert.assertTrue(demoChatPage.checkLastAttachment(fileName));
+    }
+
+    public void checkAttachmentSize(int size){
+        Assert.assertTrue(demoChatPage.checkAttachmentSize(size));
     }
 }

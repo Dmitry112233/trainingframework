@@ -31,11 +31,12 @@ public class DemoChatPage extends Page {
     private static final By EMAIL_FIELD = By.xpath("//input[@placeholder='Email']");
     private static final By URL_FIELD = By.xpath("//input[@placeholder='Photo URL']");
     private static final By SAVE_BUTTON = By.xpath("//button[@class='integri-user-settings-save integri-button-blue']");
-    private static final By OVERLAPS_WINDOW = By.xpath("//div[@class='integri-modal integri-modal-shown']");
+    private static final By OVERLAPS_NAME_WINDOW = By.xpath("//div[@class='integri-modal integri-modal-shown']");
     private static final By NAME = By.xpath("//div[@class='integri-session-user-name']");
     private static final By PHOTO = By.xpath("//div[@class='integri-chat-session']/div[1]");
     private static final By INPUT_FILE = By.xpath("//input[@type='file']");
     private static final By START_BUTTON = By.xpath("//button[contains(@class, 'integri-file-upload-start')]");
+    private static final By ATTACHMENT_FILES = By.xpath("//span[@class='integri-chat-message-attachment-file-name']");
 
     public DemoChatPage typeMessage(String message) {
         try {
@@ -47,24 +48,46 @@ public class DemoChatPage extends Page {
         return this;
     }
 
-    public DemoChatPage addFile(String filePath){
-        driver.findElement(INPUT_FILE).sendKeys(filePath);
+    public DemoChatPage addFile(String filePath) {
         driver.findElement(INPUT_FILE).sendKeys(filePath);
         return this;
     }
 
-    public DemoChatPage clickStartButton(){
+    private List<WebElement> getAttachmentList() {
+        return driver.findElements(ATTACHMENT_FILES);
+    }
+
+    public boolean checkAttachmentSize(int size) {
+        try {
+            Thread.sleep(2000);
+            if (getAttachmentList().size() == size) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean checkLastAttachment(String value) {
+        List<WebElement> attachments = getAttachmentList();
+        return attachments.get(attachments.size() - 1).getText().split(" ")[0].equals(value);
+    }
+
+    public DemoChatPage clickStartButton() {
         driver.findElement(START_BUTTON).click();
         return this;
     }
 
     public boolean checkMainName(String value) {
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(OVERLAPS_WINDOW));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(OVERLAPS_NAME_WINDOW));
         return driver.findElement(NAME).getText().equals(value);
     }
 
     public boolean checkMainPhotoUrl(String value) {
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(OVERLAPS_WINDOW));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(OVERLAPS_NAME_WINDOW));
         return getBackgroundImageUrl(driver.findElement(PHOTO).getCssValue("background-image")).equals(value);
     }
 
@@ -115,12 +138,12 @@ public class DemoChatPage extends Page {
     }
 
     public DemoChatPage clickSettingButton() {
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(OVERLAPS_WINDOW));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(OVERLAPS_NAME_WINDOW));
         driver.findElement(SETTINGS_BUTTON).click();
         return this;
     }
 
-    public DemoChatPage clcikDragAndDropButton() {
+    public DemoChatPage clickDragAndDropButton() {
         driver.findElement(DRAG_AND_DROP_BUTTON).click();
         return this;
     }
