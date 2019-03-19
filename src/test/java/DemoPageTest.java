@@ -100,8 +100,13 @@ public class DemoPageTest {
                 .checkAttachmentSize(Data.ATTACHMENT_SIZE);
     }
 
+    @Test
+    public void inviteUsersToChatTest(){
+        demoChatSteps.clickInviteButton().checkNotifyMessage(Data.NOTIFY_MESSAGE).checkBufferText();
+    }
+
     @AfterMethod
     public void quit() {
-       driverManager.quitWebDriver();
+       //driverManager.quitWebDriver();
     }
 }

@@ -98,4 +98,19 @@ public class DemoChatSteps {
     public void checkAttachmentSize(int size) {
         Assert.assertEquals(demoChatPage.getAttachmentSize(), size);
     }
+
+    public DemoChatSteps clickInviteButton(){
+        demoChatPage.clickInviteButton();
+        return this;
+    }
+
+    public DemoChatSteps checkNotifyMessage(String message){
+        Assert.assertEquals(demoChatPage.getNotifyMessage(), message);
+        return this;
+    }
+
+    public void checkBufferText(){
+        Assert.assertEquals(demoChatPage.getUrlFromBuffer(), demoChatPage.getCurrentUrl());
+    }
+
 }

@@ -14,5 +14,6 @@ public class Data {
             ".jpg&m=c_large_wide";
     public static final String DEFAULT_NAME = "Anonymous";
     public static final int ATTACHMENT_SIZE = 5;
+    public static final String NOTIFY_MESSAGE = "Link was copied";
 
 }

@@ -5,6 +5,10 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import java.util.List;
 
 public class DemoChatPage extends Page {
@@ -37,6 +41,9 @@ public class DemoChatPage extends Page {
     private static final By START_BUTTON = By.xpath("//button[contains(@class, 'integri-file-upload-start')]");
     private static final By ATTACHMENT_FILES = By.xpath("//span[@class='integri-chat-message-attachment-file-name']");
     private static final By DELETING_MESSAGE_DIV = By.xpath("//div[@class='integri-chat-message integri-chat-message-utility']");
+    private static final By INVITE_BUTTON = By.xpath("//button[@class='btn']");
+    private static final By NOTIFY_MESSAGE = By.xpath("//span[@data-notify='message']");
+
 
     public DemoChatPage typeMessage(String message) {
         driver.findElement(MESSAGE_FIELD).sendKeys(message);
@@ -52,6 +59,33 @@ public class DemoChatPage extends Page {
         return this;
     }
 
+    public DemoChatPage clickInviteButton() {
+        driver.findElement(INVITE_BUTTON).click();
+        return this;
+    }
+
+    public String getNotifyMessage() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(NOTIFY_MESSAGE));
+        return driver.findElement(NOTIFY_MESSAGE).getText();
+    }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+
+    public String getUrlFromBuffer() {
+        String data = "";
+        try {
+            data = (String) Toolkit.getDefaultToolkit()
+                    .getSystemClipboard().getData(DataFlavor.stringFlavor);
+        } catch (UnsupportedFlavorException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
     public DemoChatPage addFile(String filePath) {
         driver.findElement(INPUT_FILE).sendKeys(filePath);
         return this;
@@ -62,7 +96,7 @@ public class DemoChatPage extends Page {
     }
 
     public int getAttachmentSize() {
-        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(ATTACHMENT_FILES, Data.ATTACHMENT_SIZE -1));
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(ATTACHMENT_FILES, Data.ATTACHMENT_SIZE - 1));
         return getAttachmentList().size();
     }
 
