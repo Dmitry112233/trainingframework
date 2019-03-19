@@ -17,11 +17,15 @@ public class DemoChatSteps {
     }
 
     public void checkLastMessage(String message) {
-        Assert.assertEquals(demoChatPage.getOwnLastMessageText(), message);
+        Assert.assertEquals(demoChatPage.getOwnLastMessage(), message);
     }
 
-    public void checkLastEditingMessage(String message){
-        Assert.assertEquals(demoChatPage.getOwnLastEditingMessage(), message);
+    public void checkLastEditingMessage(String message) {
+        Assert.assertEquals(demoChatPage.getOwnLastEditMessage(), message);
+    }
+
+    public void checkLastDeletingMessage(String message) {
+        Assert.assertEquals(demoChatPage.getOwnLastDeleteMessage(), message);
     }
 
     public DemoChatSteps removeLastOwnMessage() {
@@ -36,64 +40,62 @@ public class DemoChatSteps {
     }
 
     public DemoChatSteps sendTenMessages(String message) {
-        for (int i = 0; i < 11; i++) {
-            demoChatPage.typeMessage(message).clickSendButton();
-        }
+        demoChatPage.sendTenMessages(message);
         return this;
     }
 
     public void checkDemoVersionWindowIsDisplayed() {
-        demoChatPage.checkDemoVersionWindowIsDisplayed();
+        Assert.assertTrue(demoChatPage.checkDemoVersionWindowIsDisplayed());
     }
 
-    public DemoChatSteps fillInProfile(String name, String email, String photo){
+    public DemoChatSteps fillInProfile(String name, String email, String photo) {
         demoChatPage.clickSettingButton().typeUserName(name).typeUserEmail(email)
                 .typePhotoUrl(photo).clickSaveButton();
         return this;
     }
 
-    public DemoChatSteps fillInUserName(String username){
+    public DemoChatSteps fillInUserName(String username) {
         demoChatPage.clickSettingButton().typeUserName(username).clickSaveButton();
         return this;
     }
 
-    public void checkProfileData(String name, String email, String photo){
+    public void checkProfileData(String name, String email, String photo) {
         demoChatPage.clickSettingButton();
         Assert.assertEquals(demoChatPage.getProfileName(), name);
         Assert.assertEquals(demoChatPage.getProfileEmail(), email);
         Assert.assertEquals(demoChatPage.getProfilePhotoUrl(), photo);
     }
 
-    public DemoChatSteps checkMainName(String name){
+    public DemoChatSteps checkMainName(String name) {
         Assert.assertEquals(demoChatPage.getMainName(), name);
         return this;
     }
 
-    public DemoChatSteps checkMainPhoto(String photo){
+    public DemoChatSteps checkMainPhoto(String photo) {
         Assert.assertEquals(demoChatPage.getMainPhotoUrl(), photo);
         return this;
     }
 
-    public DemoChatSteps clickDragAndDropButton(){
+    public DemoChatSteps clickDragAndDropButton() {
         demoChatPage.clickDragAndDropButton();
         return this;
     }
 
-    public DemoChatSteps addFile(String filePath){
+    public DemoChatSteps addFile(String filePath) {
         demoChatPage.addFile(filePath);
         return this;
     }
 
-    public DemoChatSteps clickStartButton(){
+    public DemoChatSteps clickStartButton() {
         demoChatPage.clickStartButton();
         return this;
     }
 
-    public void checkLastAttachment(String fileName){
+    public void checkLastAttachment(String fileName) {
         Assert.assertEquals(demoChatPage.getLastAttachment(), fileName);
     }
 
-    public void checkAttachmentSize(int size){
+    public void checkAttachmentSize(int size) {
         Assert.assertEquals(demoChatPage.getAttachmentSize(), size);
     }
 }

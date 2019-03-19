@@ -11,7 +11,7 @@ public class Page {
 
     protected Page(WebDriver driver){
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, 5);
+        this.wait = new WebDriverWait(driver, 10);
     }
 
     public WebDriver getDriver() {

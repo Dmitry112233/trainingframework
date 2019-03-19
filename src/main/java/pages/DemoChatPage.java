@@ -1,9 +1,8 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import data.Data;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
@@ -37,13 +36,18 @@ public class DemoChatPage extends Page {
     private static final By INPUT_FILE = By.xpath("//input[@type='file']");
     private static final By START_BUTTON = By.xpath("//button[contains(@class, 'integri-file-upload-start')]");
     private static final By ATTACHMENT_FILES = By.xpath("//span[@class='integri-chat-message-attachment-file-name']");
+    private static final By DELETING_MESSAGE_DIV = By.xpath("//div[@class='integri-chat-message integri-chat-message-utility']");
 
     public DemoChatPage typeMessage(String message) {
-        try {
-            Thread.sleep(150);
+        driver.findElement(MESSAGE_FIELD).sendKeys(message);
+        return this;
+    }
+
+    public DemoChatPage sendTenMessages(String message) {
+        for (int i = 0; i < 11; i++) {
+            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(OWN_MESSAGE_LIST, i - 1));
             driver.findElement(MESSAGE_FIELD).sendKeys(message);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            clickSendButton();
         }
         return this;
     }
@@ -58,20 +62,15 @@ public class DemoChatPage extends Page {
     }
 
     public int getAttachmentSize() {
-        try {
-            Thread.sleep(2000);
-            return  getAttachmentList().size();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return -1;
-        }
+        wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(ATTACHMENT_FILES, Data.ATTACHMENT_SIZE -1));
+        return getAttachmentList().size();
     }
 
     public String getLastAttachment() {
         List<WebElement> attachments = getAttachmentList();
-        if(attachments.size() > 0 ) {
+        if (attachments.size() > 0) {
             return attachments.get(attachments.size() - 1).getText().split(" ")[0];
-        }else {
+        } else {
             return "There isn't attachment";
         }
     }
@@ -132,6 +131,7 @@ public class DemoChatPage extends Page {
     }
 
     public DemoChatPage clickSendButton() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(SEND_BUTTON));
         driver.findElement(SEND_BUTTON).click();
         return this;
     }
@@ -178,23 +178,32 @@ public class DemoChatPage extends Page {
         return driver.findElements(OWN_MESSAGE_LIST);
     }
 
-    public String getOwnLastMessageText() {
-        try {
-            Thread.sleep(500);
-            List<WebElement> messages = getMessageList();
-            return messages.get(messages.size() - 1).getText();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public String getOwnLastMessage() {
+        List<WebElement> messages = getMessageList();
+        return messages.get(messages.size() - 1).getText();
     }
 
-    public String getOwnLastEditingMessage(){
+    public String getOwnLastDeleteMessage() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(DELETING_MESSAGE_DIV));
         List<WebElement> messages = getMessageList();
-        WebElement mess = messages.get(messages.size()-1);
-        System.out.println(mess.getCssValue("content"));
-        wait.until(ExpectedConditions.attributeToBeNotEmpty(mess, "content"));
-        return mess.getText();
+        return messages.get(messages.size() - 1).getText();
+    }
+
+    public String getOwnLastEditMessage() {
+        wait.until(new ExpectedCondition<String>() {
+            public String apply(WebDriver driver) {
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                String str = "";
+                while (!str.equals("\"(edited)\"")) {
+                    Object content = js.executeScript("return window.getComputedStyle" +
+                            "(document.getElementsByClassName('integri-chat-message-text')[0], '::after').getPropertyValue('content');");
+                    str = content.toString();
+                }
+                return str;
+            }
+        });
+        List<WebElement> messages = getMessageList();
+        return messages.get(messages.size() - 1).getText();
     }
 
     public boolean checkDemoVersionWindowIsDisplayed() {

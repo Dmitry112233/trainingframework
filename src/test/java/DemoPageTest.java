@@ -40,7 +40,7 @@ public class DemoPageTest {
 
     @Test
     public void removeMessageTest() {
-        demoChatSteps.sendMessage(Data.MESSAGE).removeLastOwnMessage().checkLastMessage(Data.REMOVED_MESSAGE);
+        demoChatSteps.sendMessage(Data.MESSAGE).removeLastOwnMessage().checkLastDeletingMessage(Data.REMOVED_MESSAGE);
     }
 
     @Test
@@ -102,6 +102,6 @@ public class DemoPageTest {
 
     @AfterMethod
     public void quit() {
-        driverManager.quitWebDriver();
+       driverManager.quitWebDriver();
     }
 }
