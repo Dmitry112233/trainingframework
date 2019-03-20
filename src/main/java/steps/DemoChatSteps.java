@@ -17,15 +17,15 @@ public class DemoChatSteps {
     }
 
     public void checkLastMessage(String message) {
-        Assert.assertEquals(demoChatPage.getOwnLastMessage(), message);
+        Assert.assertEquals(demoChatPage.getOwnLastMessage(), message, "Sending message isn't equal");
     }
 
     public void checkLastEditingMessage(String message) {
-        Assert.assertEquals(demoChatPage.getOwnLastEditMessage(), message);
+        Assert.assertEquals(demoChatPage.getOwnLastEditMessage(), message, "Editing message isn't equal");
     }
 
     public void checkLastDeletingMessage(String message) {
-        Assert.assertEquals(demoChatPage.getOwnLastDeleteMessage(), message);
+        Assert.assertEquals(demoChatPage.getOwnLastDeleteMessage(), message, "Deleting message isn't equal");
     }
 
     public DemoChatSteps removeLastOwnMessage() {
@@ -45,7 +45,7 @@ public class DemoChatSteps {
     }
 
     public void checkDemoVersionWindowIsDisplayed() {
-        Assert.assertTrue(demoChatPage.checkDemoVersionWindowIsDisplayed());
+        Assert.assertTrue(demoChatPage.checkDemoVersionWindowIsDisplayed(), "Demo version window hasn't appeared");
     }
 
     public DemoChatSteps fillInProfile(String name, String email, String photo) {
@@ -61,18 +61,18 @@ public class DemoChatSteps {
 
     public void checkProfileData(String name, String email, String photo) {
         demoChatPage.clickSettingButton();
-        Assert.assertEquals(demoChatPage.getProfileName(), name);
-        Assert.assertEquals(demoChatPage.getProfileEmail(), email);
-        Assert.assertEquals(demoChatPage.getProfilePhotoUrl(), photo);
+        Assert.assertEquals(demoChatPage.getProfileName(), name, "Profile name isn't equal");
+        Assert.assertEquals(demoChatPage.getProfileEmail(), email, "Profile email isn't equal");
+        Assert.assertEquals(demoChatPage.getProfilePhotoUrl(), photo, "Profile photo url isn't equal");
     }
 
     public DemoChatSteps checkMainName(String name) {
-        Assert.assertEquals(demoChatPage.getMainName(), name);
+        Assert.assertEquals(demoChatPage.getMainName(), name, "Avatar name isn't equal");
         return this;
     }
 
     public DemoChatSteps checkMainPhoto(String photo) {
-        Assert.assertEquals(demoChatPage.getMainPhotoUrl(), photo);
+        Assert.assertEquals(demoChatPage.getMainPhotoUrl(), photo, "Avatar photo url isn't equal");
         return this;
     }
 
@@ -92,11 +92,11 @@ public class DemoChatSteps {
     }
 
     public void checkLastAttachment(String fileName) {
-        Assert.assertEquals(demoChatPage.getLastAttachment(), fileName);
+        Assert.assertEquals(demoChatPage.getLastAttachment(), fileName, "Attachment name isn't equal");
     }
 
     public void checkAttachmentSize(int size) {
-        Assert.assertEquals(demoChatPage.getAttachmentSize(), size);
+        Assert.assertEquals(demoChatPage.getAttachmentSize(), size, "Attachments size incorrect");
     }
 
     public DemoChatSteps clickInviteButton(){
@@ -105,12 +105,12 @@ public class DemoChatSteps {
     }
 
     public DemoChatSteps checkNotifyMessage(String message){
-        Assert.assertEquals(demoChatPage.getNotifyMessage(), message);
+        Assert.assertEquals(demoChatPage.getNotifyMessage(), message, "Notify message isn't equal");
         return this;
     }
 
     public void checkBufferText(){
-        Assert.assertEquals(demoChatPage.getUrlFromBuffer(), demoChatPage.getCurrentUrl());
+        Assert.assertEquals(demoChatPage.getUrlFromBuffer(), demoChatPage.getCurrentUrl(), "Buffer link isn't equal");
     }
 
 }
