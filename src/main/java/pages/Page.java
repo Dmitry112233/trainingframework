@@ -9,7 +9,7 @@ public class Page {
 
     protected WebDriverWait wait;
 
-    protected Page(WebDriver driver){
+    protected Page(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, 10);
     }
@@ -18,7 +18,7 @@ public class Page {
         return driver;
     }
 
-    public String getCurrentUrl(){
+    public String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
 }

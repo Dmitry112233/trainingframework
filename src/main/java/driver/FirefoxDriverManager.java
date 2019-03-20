@@ -6,8 +6,6 @@ import utils.PropertyReader;
 
 public class FirefoxDriverManager extends DriverManager {
 
-    private PropertyReader propertyReader;
-
     public void createWebDriver() {
         FirefoxOptions options = new FirefoxOptions();
         System.setProperty("webdriver.gecko.driver", PropertyReader.getInstance().get("geckodriver"));
