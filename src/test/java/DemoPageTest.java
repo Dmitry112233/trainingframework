@@ -107,6 +107,6 @@ public class DemoPageTest {
 
     @AfterMethod
     public void quit() {
-       //driverManager.quitWebDriver();
+       driverManager.quitWebDriver();
     }
 }
