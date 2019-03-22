@@ -229,6 +229,7 @@ public class DemoChatPage extends Page {
         return lastMessage;
     }
 
+    //TODO add timeOut for while
     public String getOwnLastEditedMessage() {
         wait.until(new ExpectedCondition<String>() {
             public String apply(WebDriver driver) {
