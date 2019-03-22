@@ -1,6 +1,5 @@
 package utils;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -29,12 +28,18 @@ public class PropertyReader {
             property.load(new FileInputStream(propertyFilePath));
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Can't find file witj path: " + propertyFilePath);
+            System.err.println("Can't find file with path: " + propertyFilePath);
         }
     }
 
-    public String get(String value){
+    public String get(String value) {
         return property.getProperty(value);
+    }
+
+    public String getFileName(String value) {
+        String path = property.getProperty(value);
+        String fileName = path.substring(path.lastIndexOf("/") + 1);
+        return fileName;
     }
 
 }
