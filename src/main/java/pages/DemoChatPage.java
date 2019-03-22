@@ -1,21 +1,16 @@
 package pages;
 
 import data.Data;
-import org.apache.log4j.Logger;
+import elements.Input;
+import lombok.extern.log4j.Log4j;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
 import java.util.List;
 
+@Log4j
 public class DemoChatPage extends Page {
-
-    private static final Logger logger = Logger.getLogger(DemoChatPage.class);
-
 
     public DemoChatPage(WebDriver driver) {
         super(driver);
@@ -48,25 +43,21 @@ public class DemoChatPage extends Page {
     private static final By INVITE_BUTTON = By.xpath("//button[@class='btn']");
     private static final By NOTIFY_MESSAGE = By.xpath("//span[@data-notify='message']");
 
-
     public DemoChatPage typeMessage(String message) {
-        logger.info("Type message: " + "\"" + message + "\"");
-        driver.findElement(MESSAGE_FIELD).sendKeys(message);
+        new Input(MESSAGE_FIELD, driver).sendKeys(message);
         return this;
     }
 
     public DemoChatPage sendTenMessages(String message) {
         for (int i = 0; i < 11; i++) {
-            logger.info("Type message: " + "\"" + message + "\"");
             wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(OWN_MESSAGE_LIST, i - 1));
-            driver.findElement(MESSAGE_FIELD).sendKeys(message);
+            new Input(MESSAGE_FIELD, driver).sendKeys(message);
             clickSendButton();
         }
         return this;
     }
 
     public DemoChatPage clickInviteButton() {
-        logger.info("Click [Invite users to chat] button");
         driver.findElement(INVITE_BUTTON).click();
         return this;
     }
@@ -74,47 +65,32 @@ public class DemoChatPage extends Page {
     public String getNotifyMessage() {
         wait.until(ExpectedConditions.presenceOfElementLocated(NOTIFY_MESSAGE));
         String notifyMessage = driver.findElement(NOTIFY_MESSAGE).getText();
-        logger.info("Get notify message: " + "\"" + notifyMessage + "\"");
+        log.info("Get notify message: " + notifyMessage);
         return notifyMessage;
     }
 
     public String getCurrentUrl() {
-        String currentUrl = driver.getCurrentUrl();
-        logger.info("Get current url: " + "\"" + currentUrl + "\"");
-        return currentUrl;
+        return super.getCurrentUrl();
     }
 
     public String getUrlFromBuffer() {
-        String bufferUrl = "";
-        try {
-            bufferUrl = (String) Toolkit.getDefaultToolkit()
-                    .getSystemClipboard().getData(DataFlavor.stringFlavor);
-            logger.info("Get url form buffer: " + "\"" + bufferUrl + "\"");
-        } catch (UnsupportedFlavorException e) {
-            logger.warn("Can't read from buffer " + e);
-            e.printStackTrace();
-        } catch (IOException e) {
-            logger.warn("Can't read from buffer " + e);
-            e.printStackTrace();
-        }
-        return bufferUrl;
+        return super.getUrlFromBuffer();
     }
 
     public DemoChatPage addFile(String filePath) {
-        logger.info("Add file by path: " + filePath);
+        log.info("Add file by path: " + filePath);
         driver.findElement(INPUT_FILE).sendKeys(filePath);
         return this;
     }
 
     private List<WebElement> getAttachmentList() {
-        logger.info("Get all attachments");
         return driver.findElements(ATTACHMENT_FILES);
     }
 
     public int getAttachmentSize() {
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(ATTACHMENT_FILES, Data.ATTACHMENT_SIZE - 1));
         List<WebElement> attachments = getAttachmentList();
-        logger.info("Get attachments size: " + "\"" + attachments.size() + "\"");
+        log.info("Get attachments size: " + "\"" + attachments.size() + "\"");
         return attachments.size();
     }
 
@@ -122,16 +98,15 @@ public class DemoChatPage extends Page {
         List<WebElement> attachments = getAttachmentList();
         if (attachments.size() > 0) {
             String lastAttachment = attachments.get(attachments.size() - 1).getText().split(" ")[0];
-            logger.info("Get last attachment name: " + "\"" + lastAttachment + "\"");
+            log.info("Get last attachment name: " + "\"" + lastAttachment + "\"");
             return lastAttachment;
         } else {
-            logger.warn("There isn't attachment");
+            log.warn("There isn't attachment");
             return "There isn't attachment";
         }
     }
 
     public DemoChatPage clickStartButton() {
-        logger.info("Click [Start] button");
         driver.findElement(START_BUTTON).click();
         return this;
     }
@@ -139,137 +114,119 @@ public class DemoChatPage extends Page {
     public String getMainName() {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(OVERLAPS_NAME_WINDOW));
         String avatarName = driver.findElement(NAME).getText();
-        logger.info("Get avatar name: " + "\"" + avatarName + "\"");
+        log.info("Get avatar name: " + "\"" + avatarName + "\"");
         return avatarName;
     }
 
     public String getMainPhotoUrl() {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(OVERLAPS_NAME_WINDOW));
         String avatarPhoto = getBackgroundImageUrl(driver.findElement(PHOTO).getCssValue("background-image"));
-        logger.info("Get avatar photo url: " + "\"" + avatarPhoto + "\"");
+        log.info("Get avatar photo url: " + "\"" + avatarPhoto + "\"");
         return avatarPhoto;
     }
 
-    private String getBackgroundImageUrl(String imageUrl) {
+    private static String getBackgroundImageUrl(String imageUrl) {
         imageUrl = imageUrl.substring(imageUrl.indexOf("\"") + 1, imageUrl.lastIndexOf("\""));
         return imageUrl;
     }
 
     public DemoChatPage typeUserName(String userName) {
-        logger.info("Type user name: " + "\"" + userName + "\"");
-        driver.findElement(NAME_FIELD).clear();
-        driver.findElement(NAME_FIELD).sendKeys(userName);
+        new Input(NAME_FIELD, driver).sendKeys(userName);
         return this;
     }
 
     public DemoChatPage typeUserEmail(String userEmail) {
-        logger.info("Type user email: " + "\"" + userEmail + "\"");
-        driver.findElement(EMAIL_FIELD).clear();
-        driver.findElement(EMAIL_FIELD).sendKeys(userEmail);
+        new Input(EMAIL_FIELD, driver).sendKeys(userEmail);
         return this;
     }
 
     public DemoChatPage typePhotoUrl(String photoUrl) {
-        logger.info("Type photo url: " + "\"" + photoUrl + "\"");
-        driver.findElement(URL_FIELD).clear();
-        driver.findElement(URL_FIELD).sendKeys(photoUrl);
+        new Input(URL_FIELD, driver).sendKeys(photoUrl);
         return this;
     }
 
     public DemoChatPage clickSaveButton() {
-        logger.info("Click [Save] button");
         driver.findElement(SAVE_BUTTON).click();
         return this;
     }
 
     public String getProfileName() {
         String profileName = driver.findElement(NAME_FIELD).getAttribute("value");
-        logger.info("Get profile name: " + "\"" + profileName + "\"");
+        log.info("Get profile data: " + "\"" + profileName + "\"");
         return profileName;
     }
 
     public String getProfileEmail() {
         String profileEmail = driver.findElement(EMAIL_FIELD).getAttribute("value");
-        logger.info("Get profile email: " + "\"" + profileEmail + "\"");
+        log.info("Get profile data: " + "\"" + profileEmail + "\"");
         return profileEmail;
     }
 
     public String getProfilePhotoUrl() {
         String profilePhoto = driver.findElement(URL_FIELD).getAttribute("value");
-        logger.info("Get profile photo url: " + "\"" + profilePhoto + "\"");
+        log.info("Get profile data: " + "\"" + profilePhoto + "\"");
         return profilePhoto;
     }
 
     public DemoChatPage clickSendButton() {
-        logger.info("Click [Send] button");
         wait.until(ExpectedConditions.visibilityOfElementLocated(SEND_BUTTON));
         driver.findElement(SEND_BUTTON).click();
         return this;
     }
 
     public DemoChatPage clickSettingsButton() {
-        logger.info("Click [Settings] button");
         wait.until(ExpectedConditions.invisibilityOfElementLocated(OVERLAPS_NAME_WINDOW));
         driver.findElement(SETTINGS_BUTTON).click();
         return this;
     }
 
     public DemoChatPage clickDragAndDropButton() {
-        logger.info("Click [Drag & drop] button");
         driver.findElement(DRAG_AND_DROP_BUTTON).click();
         return this;
     }
 
     public DemoChatPage clickEditButtonForLastMessage() {
-        logger.info("Click [Edit] button");
         driver.findElement(EDIT_OWN_LAST_MESSAGE_BUTTON).click();
         return this;
     }
 
     public DemoChatPage typeEditedMessage(String message) {
-        logger.info("Type edited message: " + "\"" + message + "\"");
-        WebElement messageForEdit = driver.findElement(MESSAGE_FIELD_FOR_EDIT);
-        messageForEdit.clear();
-        messageForEdit.sendKeys(message);
+        new Input(MESSAGE_FIELD_FOR_EDIT, driver).sendKeys(message);
         return this;
     }
 
     public DemoChatPage sendEditedMessage() {
-        logger.info("Send edited message");
         driver.findElement(MESSAGE_FIELD_FOR_EDIT).sendKeys(Keys.chord(Keys.ENTER));
         return this;
     }
 
     public DemoChatPage clickRemoveButtonForOwnLastMessage() {
-        logger.info("Click [Remove] button");
         driver.findElement(DELETE_OWN_LAST_MESSAGE_BUTTON).click();
         return this;
     }
 
     public DemoChatPage acceptAlert() {
-        logger.info("Accept alert");
         driver.switchTo().alert().accept();
         return this;
     }
 
     private List<WebElement> getMessageList() {
-        logger.info("Get all messages");
         return driver.findElements(OWN_MESSAGE_LIST);
     }
 
     public String getOwnLastMessage() {
         List<WebElement> messages = getMessageList();
         String lastMessage = messages.get(messages.size() - 1).getText();
-        logger.info("Get last message: " + "\"" + lastMessage + "\"");
+        log.info("Get last message: " + "\"" + lastMessage + "\"");
         return lastMessage;
     }
 
     public String getOwnLastDeletedMessage() {
         wait.until(ExpectedConditions.presenceOfElementLocated(DELETING_MESSAGE_DIV));
         List<WebElement> messages = getMessageList();
-        String deletedMessage = messages.get(messages.size() - 1).getText();
-        logger.info("Get removed message: " + "\"" + deletedMessage + "\"");
-        return deletedMessage;
+        String lastMessage = messages.get(messages.size() - 1).getText();
+        log.info("Get last deleted message: " + "\"" + lastMessage + "\"");
+        return lastMessage;
     }
 
     public String getOwnLastEditedMessage() {
@@ -286,13 +243,12 @@ public class DemoChatPage extends Page {
             }
         });
         List<WebElement> messages = getMessageList();
-        String editedMessage = messages.get(messages.size() - 1).getText();
-        logger.info("Get edited message: " + "\"" + editedMessage + "\"");
-        return editedMessage;
+        String lastMessage = messages.get(messages.size() - 1).getText();
+        log.info("Get last edited message: " + "\"" + lastMessage + "\"");
+        return lastMessage;
     }
 
     public boolean checkDemoVersionWindowIsDisplayed() {
-        logger.info("Check demo version window has appeared");
         wait.until(ExpectedConditions.presenceOfElementLocated(DEMO_VERSION_WINDOW));
         return driver.findElement(DEMO_VERSION_WINDOW).isDisplayed();
     }
