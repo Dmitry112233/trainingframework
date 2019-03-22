@@ -231,16 +231,12 @@ public class DemoChatPage extends Page {
 
     //TODO add timeOut for while
     public String getOwnLastEditedMessage() {
-        wait.until(new ExpectedCondition<String>() {
-            public String apply(WebDriver driver) {
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
                 JavascriptExecutor js = (JavascriptExecutor) driver;
-                String str = "";
-                while (!str.equals("\"(edited)\"")) {
                     Object content = js.executeScript("return window.getComputedStyle" +
                             "(document.getElementsByClassName('integri-chat-message-text')[0], '::after').getPropertyValue('content');");
-                    str = content.toString();
-                }
-                return str;
+                return content.toString().contains("\"(edited)\"");
             }
         });
         List<WebElement> messages = getMessageList();
