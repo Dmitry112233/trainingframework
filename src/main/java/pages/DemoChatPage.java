@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class DemoChatPage extends Page {
     private static final By DELETING_MESSAGE_DIV = By.xpath("//div[@class='integri-chat-message integri-chat-message-utility']");
     private static final By INVITE_BUTTON = By.xpath("//button[@class='btn']");
     private static final By NOTIFY_MESSAGE = By.xpath("//span[@data-notify='message']");
+    private static final By UPLOADS_FILE_WINDOW = By.xpath("//div[@class='integri-modal integri-modal-shown']");
 
     public DemoChatPage typeMessage(String message) {
         new Input(MESSAGE_FIELD, driver).sendKeys(message);
@@ -84,6 +86,7 @@ public class DemoChatPage extends Page {
     }
 
     private List<WebElement> getAttachmentList() {
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(UPLOADS_FILE_WINDOW));
         return driver.findElements(ATTACHMENT_FILES);
     }
 
@@ -229,7 +232,6 @@ public class DemoChatPage extends Page {
         return lastMessage;
     }
 
-    //TODO add timeOut for while
     public String getOwnLastEditedMessage() {
         wait.until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {

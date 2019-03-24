@@ -2,20 +2,23 @@ import data.Data;
 import driver.DriverManager;
 import driver.DriverManagerFactory;
 import driver.DriverType;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.DemoChatPage;
 import steps.DemoChatSteps;
+import baseTest.BaseTest;
+import baseTest.CustomListener;
 import utils.PropertyReader;
 
 import java.util.concurrent.TimeUnit;
 
-public class DemoPageTest {
+
+@Listeners(CustomListener.class)
+public class DemoPageTest extends BaseTest {
 
     private DemoChatSteps demoChatSteps;
-    private WebDriver driver;
     private DriverManager driverManager;
 
 
