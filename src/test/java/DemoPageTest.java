@@ -18,6 +18,7 @@ public class DemoPageTest {
     private WebDriver driver;
     private DriverManager driverManager;
 
+
     @BeforeMethod
     public void init() {
         driverManager = DriverManagerFactory.getDriverManager(DriverType.CHROME);
@@ -35,12 +36,12 @@ public class DemoPageTest {
 
     @Test
     public void editMessageTest() {
-        demoChatSteps.sendMessage(Data.MESSAGE).editLastOwnMessage(Data.EDITING_MESSAGE).checkLastEditingMessage(Data.EDITING_MESSAGE);
+        demoChatSteps.sendMessage(Data.MESSAGE).editLastOwnMessage(Data.EDITING_MESSAGE).checkLastEditedMessage(Data.EDITING_MESSAGE);
     }
 
     @Test
     public void removeMessageTest() {
-        demoChatSteps.sendMessage(Data.MESSAGE).removeLastOwnMessage().checkLastDeletingMessage(Data.REMOVED_MESSAGE);
+        demoChatSteps.sendMessage(Data.MESSAGE).removeLastOwnMessage().checkLastDeletedMessage(Data.REMOVED_MESSAGE);
     }
 
     @Test
@@ -90,7 +91,7 @@ public class DemoPageTest {
     }
 
     @Test
-    public void sendFilesTest() {
+    public void sendFiveFilesTest() {
         demoChatSteps.clickDragAndDropButton().addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path"))
                 .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path"))
                 .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path"))
@@ -101,12 +102,12 @@ public class DemoPageTest {
     }
 
     @Test
-    public void inviteUsersToChatTest(){
+    public void inviteUsersToChatTest() {
         demoChatSteps.clickInviteButton().checkNotifyMessage(Data.NOTIFY_MESSAGE).checkBufferText();
     }
 
     @AfterMethod
     public void quit() {
-       driverManager.quitWebDriver();
+        driverManager.quitWebDriver();
     }
 }
