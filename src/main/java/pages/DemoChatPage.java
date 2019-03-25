@@ -128,7 +128,7 @@ public class DemoChatPage extends Page {
         return avatarPhoto;
     }
 
-    private static String getBackgroundImageUrl(String imageUrl) {
+    private String getBackgroundImageUrl(String imageUrl) {
         imageUrl = imageUrl.substring(imageUrl.indexOf("\"") + 1, imageUrl.lastIndexOf("\""));
         return imageUrl;
     }

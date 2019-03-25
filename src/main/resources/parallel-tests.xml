@@ -1,0 +1,12 @@
+<suite name="Test-class Suite" parallel="tests" thread-count="2" >
+    <test name="Test part one">
+        <classes>
+            <class name="DemoPageTest" />
+        </classes>
+    </test>
+    <test name="Test part two">
+        <classes>
+            <class name="DemoPageTest2" />
+        </classes>
+    </test>
+</suite>
