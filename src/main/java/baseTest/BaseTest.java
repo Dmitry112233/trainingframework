@@ -11,6 +11,8 @@ public class BaseTest {
 
     protected WebDriver driver;
 
+    private int timeout = 5;
+
     public WebDriver getDriver() {
         return driver;
     }
@@ -22,7 +24,7 @@ public class BaseTest {
         driverManager = DriverManagerFactory.getDriverManager(DriverType.CHROME);
         driver = driverManager.getWebDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
     }
 
     public void quitBrowser() {

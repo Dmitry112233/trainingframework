@@ -25,21 +25,21 @@ public class DemoChatSteps {
     }
 
     @Step("Check last message")
-    public void checkLastMessage(String exp_message) {
+    public void checkLastMessage(String expMessage) {
         String lastMessage = demoChatPage.getOwnLastMessage();
-        assertThat(lastMessage, is(equalTo(exp_message)));
+        assertThat("Sending message isn't equal", lastMessage, is(equalTo(expMessage)));
     }
 
     @Step("Check last message")
-    public void checkLastEditedMessage(String exp_message) {
+    public void checkLastEditedMessage(String expMessage) {
         String editedMessage = demoChatPage.getOwnLastEditedMessage();
-        assertThat(editedMessage, is(equalTo(exp_message)));
+        assertThat("Editing message isn't equal", editedMessage, is(equalTo(expMessage)));
     }
 
     @Step("Check last message")
-    public void checkLastDeletedMessage(String exp_message) {
+    public void checkLastDeletedMessage(String expMessage) {
         String removedMessage = demoChatPage.getOwnLastDeletedMessage();
-        assertThat(removedMessage, is(equalTo(exp_message)));
+        assertThat("Deleting message isn't equal", removedMessage, is(equalTo(expMessage)));
     }
 
     @Step("Remove message")
@@ -55,7 +55,7 @@ public class DemoChatSteps {
         return this;
     }
 
-    @Step("Sen ten message")
+    @Step("Send ten messages")
     public DemoChatSteps sendTenMessages(String message) {
         demoChatPage.sendTenMessages(message);
         return this;
@@ -63,7 +63,7 @@ public class DemoChatSteps {
 
     @Step("Check demo version window is displayed")
     public void checkDemoVersionWindowIsDisplayed() {
-        assertThat(demoChatPage.checkDemoVersionWindowIsDisplayed(), is(true));
+        assertThat("Demo version window hasn't appeared", demoChatPage.checkDemoVersionWindowIsDisplayed(), is(true));
     }
 
     @Step("Fill in profile")
@@ -80,27 +80,27 @@ public class DemoChatSteps {
     }
 
     @Step("Check profile data")
-    public void checkProfileData(String exp_name, String exp_email, String exp_photo) {
+    public void checkProfileData(String expName, String expEmail, String expPhoto) {
         demoChatPage.clickSettingsButton();
         String profileName = demoChatPage.getProfileName();
         String profileEmail = demoChatPage.getProfileEmail();
         String profilePhoto = demoChatPage.getProfilePhotoUrl();
-        assertThat(profileName, is(equalTo(exp_name)));
-        assertThat(profileEmail, is(equalTo(exp_email)));
-        assertThat(profilePhoto, is(equalTo(exp_photo)));
+        assertThat("Profile name isn't equal", profileName, is(equalTo(expName)));
+        assertThat("Profile email isn't equal", profileEmail, is(equalTo(expEmail)));
+        assertThat("Profile photo url isn't equal", profilePhoto, is(equalTo(expPhoto)));
     }
 
     @Step("Check main name")
-    public DemoChatSteps checkMainName(String exp_name) {
+    public DemoChatSteps checkMainName(String expName) {
         String avatarName = demoChatPage.getMainName();
-        assertThat(avatarName, is(equalTo(exp_name)));
+        assertThat("Avatar name isn't equal", avatarName, is(equalTo(expName)));
         return this;
     }
 
     @Step("Check main photo url")
-    public DemoChatSteps checkMainPhoto(String exp_photo) {
+    public DemoChatSteps checkMainPhoto(String expPhoto) {
         String avatarPhoto = demoChatPage.getMainPhotoUrl();
-        assertThat(avatarPhoto, is(equalTo(exp_photo)));
+        assertThat("Avatar photo url isn't equal", avatarPhoto, is(equalTo(expPhoto)));
         return this;
     }
 
@@ -123,15 +123,15 @@ public class DemoChatSteps {
     }
 
     @Step("Check last attachment")
-    public void checkLastAttachment(String exp_fileName) {
+    public void checkLastAttachment(String expFileName) {
         String lastAttachment = demoChatPage.getLastAttachment();
-        assertThat(lastAttachment, is(equalTo(exp_fileName)));
+        assertThat("Attachment name isn't equal", lastAttachment, is(equalTo(expFileName)));
     }
 
     @Step("Check attachments size")
-    public void checkAttachmentSize(int exp_size) {
+    public void checkAttachmentSize(int expNumebr) {
         int attachmentSize = demoChatPage.getAttachmentSize();
-        assertThat(attachmentSize, is(equalTo(exp_size)));
+        assertThat("Attachments size is incorrect", attachmentSize, is(equalTo(expNumebr)));
     }
 
     @Step("Click [invite user to chat] button")
@@ -141,9 +141,9 @@ public class DemoChatSteps {
     }
 
     @Step("Check notify message")
-    public DemoChatSteps checkNotifyMessage(String exp_message) {
+    public DemoChatSteps checkNotifyMessage(String expMessage) {
         String notifyMessage = demoChatPage.getNotifyMessage();
-        assertThat(notifyMessage, is(equalTo(exp_message)));
+        assertThat("Notify message isn't equal", notifyMessage, is(equalTo(expMessage)));
         return this;
     }
 
@@ -151,6 +151,6 @@ public class DemoChatSteps {
     public void checkBufferText() {
         String currentUrl = demoChatPage.getCurrentUrl();
         String bufferUrl = demoChatPage.getUrlFromBuffer();
-        assertThat(bufferUrl, is(equalTo(currentUrl)));
+        assertThat("Buffer link isn't equal to chat link", bufferUrl, is(equalTo(currentUrl)));
     }
 }
