@@ -32,34 +32,31 @@ public class DemoPageTest extends BaseTest {
         demoChatSteps.fillInUserName(Data.USER_NAME).fillInUserName("").checkMainName(Data.DEFAULT_NAME);
     }
 
-    @Test
-    public void sendFileTxtTest() {
-        demoChatSteps.clickDragAndDropButton().addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path").replace("/" , "\\"))
+    @Test(dataProvider = "Data-Provider-Function")
+    public void sendFileTest(String path, String fileName) {
+        demoChatSteps.clickDragAndDropButton().addFile(System.getProperty("user.dir") + path)
                 .clickStartButton()
-                .checkLastAttachment(PropertyReader.getInstance().getFileName("file.txt.path"));
+                .checkLastAttachment(fileName);
     }
 
-    @Test
-    public void sendFilePngTest() {
-        demoChatSteps.clickDragAndDropButton().addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.png.path").replace("/" , "\\"))
-                .clickStartButton()
-                .checkLastAttachment(PropertyReader.getInstance().getFileName("file.png.path"));
-    }
-
-    @Test
-    public void sendFileExeTest() {
-        demoChatSteps.clickDragAndDropButton().addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.exe.path").replace("/" , "\\"))
-                .clickStartButton()
-                .checkLastAttachment(PropertyReader.getInstance().getFileName("file.exe.path"));
+    @DataProvider(name = "Data-Provider-Function")
+    public Object[][] createData1() {
+        return new Object[][]{
+                {PropertyReader.getInstance().get("file.txt.path").replace("/", "\\")
+                        , PropertyReader.getInstance().getFileName("file.txt.path")},
+                {PropertyReader.getInstance().get("file.png.path").replace("/", "\\")
+                        , PropertyReader.getInstance().getFileName("file.png.path")},
+                {PropertyReader.getInstance().get("file.exe.path").replace("/", "\\")
+                        , PropertyReader.getInstance().getFileName("file.exe.path")}};
     }
 
     @Test
     public void sendFiveFilesTest() {
         demoChatSteps.clickDragAndDropButton().addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path"))
-                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path"))
-                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path"))
-                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path"))
-                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path"))
+                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path").replace("/", "\\"))
+                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path").replace("/", "\\"))
+                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path").replace("/", "\\"))
+                .addFile(System.getProperty("user.dir") + PropertyReader.getInstance().get("file.txt.path").replace("/", "\\"))
                 .clickStartButton()
                 .checkAttachmentSize(Data.ATTACHMENT_SIZE);
     }
