@@ -15,5 +15,12 @@ public class Data {
     public static final String DEFAULT_NAME = "Anonymous";
     public static final int ATTACHMENT_SIZE = 5;
     public static final String NOTIFY_MESSAGE = "Link was copied";
+    public static final String LOGIN_EMAIL = "integriuser2@mailinator.com";
+    public static final String LOGIN_PASSWORD = "integripassword";
+    public static final String PROJECT_NAME = "Project";
+    public static final String PRPJECT_DESCRIPTION = "Project description";
+    public static final String PROJECT_DOMAIN = "domain.com";
+    public static final int DOMAIN_FIELDS_NUMBER = 1;
+
 
 }

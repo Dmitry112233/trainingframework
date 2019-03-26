@@ -8,7 +8,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 
-//TODO start test parallel
 public class DemoChatSteps {
 
     private DemoChatPage demoChatPage;

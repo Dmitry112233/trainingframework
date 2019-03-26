@@ -12,9 +12,9 @@ import java.io.IOException;
 @Log4j
 public class Page {
 
-    public WebDriver driver;
+    protected WebDriver driver;
 
-    protected WebDriverWait wait;
+    public WebDriverWait wait;
 
     protected Page(WebDriver driver) {
         this.driver = driver;

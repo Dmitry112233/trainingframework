@@ -1,12 +1,7 @@
 <suite name="Test-class Suite" parallel="tests" thread-count="2" >
-    <test name="Test part one">
+    <test name="Test project">
         <classes>
-            <class name="DemoPageTest" />
-        </classes>
-    </test>
-    <test name="Test part two">
-        <classes>
-            <class name="DemoPageTest2" />
+            <class name="CreateProjectTest" />
         </classes>
     </test>
 </suite>

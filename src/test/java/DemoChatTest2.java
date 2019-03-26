@@ -11,14 +11,14 @@ import utils.PropertyReader;
 
 
 @Listeners(CustomListener.class)
-public class DemoPageTest2 extends BaseTest {
+public class DemoChatTest2 extends BaseTest {
 
     private DemoChatSteps demoChatSteps;
 
     @BeforeMethod
     public void init() {
         configureBrowser();
-        driver.get(PropertyReader.getInstance().get("url.path.dev"));
+        driver.get(PropertyReader.getInstance().get("url.path.chat.dev"));
         demoChatSteps = new DemoChatSteps(new DemoChatPage(driver));
     }
 

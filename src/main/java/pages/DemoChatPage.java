@@ -232,13 +232,11 @@ public class DemoChatPage extends Page {
     }
 
     public String getOwnLastEditedMessage() {
-        wait.until(new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver driver) {
-                JavascriptExecutor js = (JavascriptExecutor) driver;
-                    Object content = js.executeScript("return window.getComputedStyle" +
-                            "(document.getElementsByClassName('integri-chat-message-text')[0], '::after').getPropertyValue('content');");
-                return content.toString().contains("\"(edited)\"");
-            }
+        wait.until((ExpectedCondition<Boolean>) driver -> {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+                Object content = js.executeScript("return window.getComputedStyle" +
+                        "(document.getElementsByClassName('integri-chat-message-text')[0], '::after').getPropertyValue('content');");
+            return content.toString().contains("\"(edited)\"");
         });
         List<WebElement> messages = getMessageList();
         String lastMessage = messages.get(messages.size() - 1).getText();
