@@ -45,24 +45,29 @@ public class CreateProjectPageSteps {
         assertThat("Project domain isn't equal", domain, is(equalTo(expDomain)));
     }
 
-    @Step("Check domain fields size")
     public CreateProjectPageSteps checkDomainFieldsSize(int expNumber) {
+        String uuid = "";
         try {
-            int domainFieldsNumber = createProjectPage.getDomainFieldsNumber();
-            assertThat("Number of fields isn't equal", domainFieldsNumber, is(equalTo(expNumber)));
+            uuid = UUID.randomUUID().toString();
+            StepResult result = new StepResult().withName("Check domain fields size");
+            Allure.getLifecycle().startStep(uuid, result);
+            checkDomainFieldBody(expNumber);
+            Allure.getLifecycle().updateStep(uuid, s -> s.withStatus(Status.PASSED));
         } catch (AssertionError e) {
             CustomListener lst = new CustomListener();
             lst.addAttchment(createProjectPage.getDriver());
-            log("failed", Status.FAILED);
+            Allure.getLifecycle().updateStep(uuid, s -> s
+                    .withStatus(Status.FAILED));
+        } finally {
+            Allure.getLifecycle().stopStep(uuid);
         }
         return this;
     }
 
-    public void log(String message, Status status) {
-        String uuid = UUID.randomUUID().toString();
-        StepResult result = new StepResult().withName(message).withStatus(status);
-        Allure.getLifecycle().startStep(uuid, result);
-        Allure.getLifecycle().stopStep(uuid);
+    public void checkDomainFieldBody(int expNumber) {
+        int domainFieldsNumber = createProjectPage.getDomainFieldsNumber();
+        assertThat("Number of fields isn't equal", domainFieldsNumber, is(equalTo(expNumber)));
     }
+
 
 }
