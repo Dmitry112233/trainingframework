@@ -29,10 +29,32 @@ public class CreateProjectTest extends BaseTest {
     public void createProjectTest() {
         int projectNumber = loginPageSteps.logIn(Data.LOGIN_EMAIL, Data.LOGIN_PASSWORD).getProjectsNumber();
         projectsPageSteps.clickAddProject()
-                .fillInProjectData(Data.PROJECT_NAME, Data.PRPJECT_DESCRIPTION, Data.PROJECT_DOMAIN)
+                .fillInProjectData(Data.PROJECT_NAME, Data.PROJECT_DESCRIPTION, Data.PROJECT_DOMAIN)
                 .checkDomainFieldsSize(Data.DOMAIN_FIELDS_NUMBER).clickCreateButton()
                 .checkProjectsNumber(projectNumber).openLastProject().clickEditLink()
-                .checkProjectData(Data.PROJECT_NAME, Data.PRPJECT_DESCRIPTION, Data.PROJECT_DOMAIN);
+                .checkProjectData(Data.PROJECT_NAME, Data.PROJECT_DESCRIPTION, Data.PROJECT_DOMAIN);
+
+    }
+
+    @Test
+    public void editProjectTest(){
+        loginPageSteps.logIn(Data.LOGIN_EMAIL, Data.LOGIN_PASSWORD).openLastProject()
+                .clickEditLink().fillInProjectData(Data.EDITING_PROJECT_NAME, Data.EDITING_PROJECT_DESCRIPTION
+        , Data.EDITING_PROJECT_DOMAIN).clickCreateButton().openLastProject().clickEditLink()
+                .checkProjectData(Data.EDITING_PROJECT_NAME, Data.EDITING_PROJECT_DESCRIPTION
+                        , Data.EDITING_PROJECT_DOMAIN);
+    }
+
+    @Test
+    public void addComponentTest(){
+        loginPageSteps.logIn(Data.LOGIN_EMAIL, Data.LOGIN_PASSWORD).openLastProject()
+                .clickAddComponent().fillInComponentData(Data.SELECT_VIDEO_CHAT, Data.COMPONENT_NAME)
+                .clickUpdateButton().checkLastComponentName(Data.SELECT_VIDEO_CHAT).openLastComponent()
+                .checkComponentData(Data.SELECT_VIDEO_CHAT, Data.COMPONENT_NAME);
+    }
+
+    @Test
+    public void editComponent(){
 
     }
 

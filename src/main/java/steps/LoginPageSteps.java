@@ -2,7 +2,6 @@ package steps;
 
 import io.qameta.allure.Step;
 import pages.LoginPage;
-import pages.ProjectsPage;
 
 public class LoginPageSteps {
 
@@ -14,7 +13,7 @@ public class LoginPageSteps {
 
 
     @Step("Log in in System")
-    public ProjectsPageSteps logIn(String email, String password){
+    public ProjectsPageSteps logIn(String email, String password) {
         return new ProjectsPageSteps(loginPage.typeEmail(email).typePassword(password).clickLogInButton());
     }
 

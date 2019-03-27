@@ -1,9 +1,7 @@
 package steps;
 
 import io.qameta.allure.Step;
-import pages.CreateProjectPage;
 import pages.ProjectsPage;
-import pages.SingleProjectPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

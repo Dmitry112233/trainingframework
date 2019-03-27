@@ -1,13 +1,9 @@
 package steps;
 
-import baseTest.CustomListener;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import io.qameta.allure.model.Status;
-import io.qameta.allure.model.StepResult;
 import pages.CreateProjectPage;
-
-import java.util.UUID;
+import utils.AllureUtil;
+import utils.Screenshot;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -38,28 +34,26 @@ public class CreateProjectPageSteps {
     @Step("Check project data")
     public void checkProjectData(String expName, String expDescription, String expDomain) {
         String name = createProjectPage.getProjectName();
-        String decription = createProjectPage.getProjectDescription();
+        String description = createProjectPage.getProjectDescription();
         String domain = createProjectPage.getFirstProjectDomain();
         assertThat("Project name isn't equal", name, is(equalTo(expName)));
-        assertThat("Project decription isn't equal", decription, is(equalTo(expDescription)));
+        assertThat("Project decription isn't equal", description, is(equalTo(expDescription)));
         assertThat("Project domain isn't equal", domain, is(equalTo(expDomain)));
     }
 
     public CreateProjectPageSteps checkDomainFieldsSize(int expNumber) {
-        String uuid = "";
+        AllureUtil allureUtil = null;
         try {
-            uuid = UUID.randomUUID().toString();
-            StepResult result = new StepResult().withName("Check domain fields size");
-            Allure.getLifecycle().startStep(uuid, result);
+            allureUtil = new AllureUtil();
+            allureUtil.startStep("Check domain fields number");
             checkDomainFieldBody(expNumber);
-            Allure.getLifecycle().updateStep(uuid, s -> s.withStatus(Status.PASSED));
+            allureUtil.setPassedStatus();
         } catch (AssertionError e) {
-            CustomListener lst = new CustomListener();
-            lst.addAttchment(createProjectPage.getDriver());
-            Allure.getLifecycle().updateStep(uuid, s -> s
-                    .withStatus(Status.FAILED));
+            Screenshot screenshot = new Screenshot();
+            screenshot.addAttchment(createProjectPage.getDriver());
+            allureUtil.setFailedStatus();
         } finally {
-            Allure.getLifecycle().stopStep(uuid);
+            allureUtil.finishStep();
         }
         return this;
     }
