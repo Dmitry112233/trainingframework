@@ -1,7 +1,9 @@
 package pages;
 
 import lombok.extern.log4j.Log4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.*;
@@ -11,6 +13,8 @@ import java.io.IOException;
 
 @Log4j
 public class Page {
+
+    private static final By BILLING_ITEM = By.xpath("//a[contains(text(),'Billing')]");
 
     protected WebDriver driver;
 
@@ -23,6 +27,12 @@ public class Page {
 
     public WebDriver getDriver() {
         return driver;
+    }
+
+    public BillingPage clickBilingItem(){
+        wait.until(ExpectedConditions.presenceOfElementLocated(BILLING_ITEM));
+        driver.findElement(BILLING_ITEM).click();
+        return new BillingPage(driver);
     }
 
     public String getCurrentUrl() {

@@ -16,25 +16,30 @@ public class ProjectsPageSteps {
     }
 
     @Step("Click [Add project] button")
-    public CreateProjectPageSteps clickAddProject(){
+    public CreateProjectPageSteps clickAddProject() {
         return new CreateProjectPageSteps(projectsPage.clickAddProject());
     }
 
     @Step("Open last project ")
-    public SingleProjectPageSteps openLastProject(){
+    public SingleProjectPageSteps openLastProject() {
         return new SingleProjectPageSteps(projectsPage.openLastProject());
     }
 
     @Step("Check projects number")
-    public ProjectsPageSteps checkProjectsNumber(int expNumber){
+    public ProjectsPageSteps checkProjectsNumber(int expNumber) {
         int projectNumber = projectsPage.getProjectsNumber();
         assertThat("Number of projects isn't equal", projectNumber, is(equalTo(expNumber + 1)));
         return this;
     }
 
     @Step("Get projects number")
-    public int getProjectsNumber(){
+    public int getProjectsNumber() {
         return projectsPage.getProjectsNumber();
+    }
+
+    @Step("Click billing item")
+    public BillingPageSteps clickBillingItem(){
+        return new BillingPageSteps(projectsPage.clickBilingItem());
     }
 
 }

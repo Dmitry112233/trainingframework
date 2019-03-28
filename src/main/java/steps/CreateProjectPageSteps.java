@@ -11,7 +11,7 @@ import static org.hamcrest.core.Is.is;
 
 public class CreateProjectPageSteps {
 
-    CreateProjectPage createProjectPage;
+    private CreateProjectPage createProjectPage;
 
 
     public CreateProjectPageSteps(CreateProjectPage createProjectPage) {
@@ -32,13 +32,14 @@ public class CreateProjectPageSteps {
     }
 
     @Step("Check project data")
-    public void checkProjectData(String expName, String expDescription, String expDomain) {
+    public CreateProjectPageSteps checkProjectData(String expName, String expDescription, String expDomain) {
         String name = createProjectPage.getProjectName();
         String description = createProjectPage.getProjectDescription();
         String domain = createProjectPage.getFirstProjectDomain();
         assertThat("Project name isn't equal", name, is(equalTo(expName)));
-        assertThat("Project decription isn't equal", description, is(equalTo(expDescription)));
+        assertThat("Project description isn't equal", description, is(equalTo(expDescription)));
         assertThat("Project domain isn't equal", domain, is(equalTo(expDomain)));
+        return this;
     }
 
     public CreateProjectPageSteps checkDomainFieldsSize(int expNumber) {
@@ -58,10 +59,10 @@ public class CreateProjectPageSteps {
         return this;
     }
 
+
     public void checkDomainFieldBody(int expNumber) {
         int domainFieldsNumber = createProjectPage.getDomainFieldsNumber();
         assertThat("Number of fields isn't equal", domainFieldsNumber, is(equalTo(expNumber)));
     }
-
 
 }

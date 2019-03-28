@@ -1,10 +1,7 @@
 import baseTest.BaseTest;
 import baseTest.CustomListener;
 import data.Data;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pages.LoginPage;
 import pages.ProjectsPage;
 import steps.LoginPageSteps;
@@ -12,7 +9,7 @@ import steps.ProjectsPageSteps;
 import utils.PropertyReader;
 
 @Listeners(CustomListener.class)
-public class CreateProjectTest extends BaseTest {
+public class ProjectTests extends BaseTest {
 
     private LoginPageSteps loginPageSteps;
     private ProjectsPageSteps projectsPageSteps;
@@ -37,30 +34,43 @@ public class CreateProjectTest extends BaseTest {
     }
 
     @Test
-    public void editProjectTest(){
+    public void editProjectTest() {
         loginPageSteps.logIn(Data.LOGIN_EMAIL, Data.LOGIN_PASSWORD).openLastProject()
                 .clickEditLink().fillInProjectData(Data.EDITING_PROJECT_NAME, Data.EDITING_PROJECT_DESCRIPTION
-        , Data.EDITING_PROJECT_DOMAIN).clickCreateButton().openLastProject().clickEditLink()
+                , Data.EDITING_PROJECT_DOMAIN).clickCreateButton().openLastProject().clickEditLink()
                 .checkProjectData(Data.EDITING_PROJECT_NAME, Data.EDITING_PROJECT_DESCRIPTION
                         , Data.EDITING_PROJECT_DOMAIN);
     }
 
-    @Test
-    public void addComponentTest(){
+    @Test(dataProvider = "components-name")
+    public void addComponentTest(String select) {
         loginPageSteps.logIn(Data.LOGIN_EMAIL, Data.LOGIN_PASSWORD).openLastProject()
-                .clickAddComponent().fillInComponentData(Data.SELECT_VIDEO_CHAT, Data.COMPONENT_NAME)
-                .clickUpdateButton().checkLastComponentName(Data.SELECT_VIDEO_CHAT).openLastComponent()
-                .checkComponentData(Data.SELECT_VIDEO_CHAT, Data.COMPONENT_NAME);
+                .clickAddComponent().fillInComponentData(select, Data.COMPONENT_NAME)
+                .clickUpdateButton().checkLastComponentName(select).openLastComponent()
+                .checkComponentData(select, Data.COMPONENT_NAME);
+    }
+
+    @DataProvider(name = "components-name")
+    public Object[][] getComponents() {
+        return new Object[][]{
+                {Data.SELECT_VIDEO_CHAT},
+                {Data.SELECT_MULTIPARTY_VIDEO},
+                {Data.SELECT_MD_VIDEO_PLAYER},
+                {Data.SELECT_SINGLE_VIDEO}};
     }
 
     @Test
-    public void editComponent(){
-
+    public void editComponent() {
+        loginPageSteps.logIn(Data.LOGIN_EMAIL, Data.LOGIN_PASSWORD).openLastProject()
+                .clickAddComponent().fillInComponentData(Data.SELECT_MULTIPARTY_VIDEO, Data.COMPONENT_NAME)
+                .clickUpdateButton().checkLastComponentName(Data.SELECT_MULTIPARTY_VIDEO).openLastComponent()
+                .typeComponentName(Data.EDITING_COMPONENT_NAME).clickUpdateButton().openLastComponent()
+                .checkComponentData(Data.SELECT_MULTIPARTY_VIDEO, Data.EDITING_COMPONENT_NAME);
     }
 
     @AfterMethod
     public void quit() {
-        //quitBrowser();
+        quitBrowser();
     }
 
 }

@@ -8,7 +8,7 @@ import utils.PropertyReader;
 
 
 @Listeners(CustomListener.class)
-public class DemoChatTest extends BaseTest {
+public class DemoChatTests extends BaseTest {
 
     private DemoChatSteps demoChatSteps;
 
@@ -65,6 +65,34 @@ public class DemoChatTest extends BaseTest {
     public void inviteUsersToChatTest() {
         demoChatSteps.clickInviteButton().checkNotifyMessage(Data.NOTIFY_MESSAGE).checkBufferText();
     }
+
+    @Test
+    public void sendMessageTest() {
+        demoChatSteps.sendMessage(Data.MESSAGE).checkLastMessage(Data.MESSAGE);
+    }
+
+    @Test
+    public void editMessageTest() {
+        demoChatSteps.sendMessage(Data.MESSAGE).editLastOwnMessage(Data.EDITING_MESSAGE).checkLastEditedMessage(Data.EDITING_MESSAGE);
+    }
+
+    @Test
+    public void removeMessageTest() {
+        demoChatSteps.sendMessage(Data.MESSAGE).removeLastOwnMessage().checkLastDeletedMessage(Data.REMOVED_MESSAGE);
+    }
+
+    @Test
+    public void checkDemoVersionWindowTest() {
+        demoChatSteps.sendTenMessages(Data.MESSAGE).checkDemoVersionWindowIsDisplayed();
+    }
+
+    @Test
+    public void fillInProfileTest() {
+        demoChatSteps.fillInProfile(Data.USER_NAME, Data.USER_EMAIL, Data.PHOTO_URL)
+                .checkMainName(Data.USER_NAME).checkMainPhoto(Data.PHOTO_URL)
+                .checkProfileData(Data.USER_NAME, Data.USER_EMAIL, Data.PHOTO_URL);
+    }
+
 
     @AfterMethod
     public void quit() {

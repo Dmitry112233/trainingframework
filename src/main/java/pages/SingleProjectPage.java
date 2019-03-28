@@ -13,6 +13,7 @@ public class SingleProjectPage extends Page{
 
     private static final By EDIT_LINK = By.xpath("//a[contains(text(),'Edit')]");
     private static final By COMPONENTS_LIST = By.xpath("//div[@class='col-xl-4 col-sm-6']//a");
+    private static final By ADD_NEW_COMPONENT_BUTTON = By.xpath("//div[@class='component new']/a");
 
     public SingleProjectPage(WebDriver driver) {
         super(driver);
@@ -29,8 +30,8 @@ public class SingleProjectPage extends Page{
     }
 
     public CreateComponentPage clickAddComponent(){
-        List<WebElement> components = getComponentsList();
-        components.get(components.size()-1).click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(ADD_NEW_COMPONENT_BUTTON));
+        driver.findElement(ADD_NEW_COMPONENT_BUTTON).click();
         return new CreateComponentPage(driver);
     }
 
