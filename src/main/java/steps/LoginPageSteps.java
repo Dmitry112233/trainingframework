@@ -12,7 +12,7 @@ public class LoginPageSteps {
     }
 
 
-    @Step("Log in in System")
+    @Step("Log in to the System")
     public ProjectsPageSteps logIn(String email, String password) {
         return new ProjectsPageSteps(loginPage.typeEmail(email).typePassword(password).clickLogInButton());
     }

@@ -16,12 +16,12 @@ public class SingleProjectPageSteps {
         this.singleProjectPage = singleProjectPage;
     }
 
-    @Step("Click Edit project")
+    @Step("Click [Edit] project")
     public CreateProjectPageSteps clickEditLink() {
         return new CreateProjectPageSteps(singleProjectPage.clickEditLink());
     }
 
-    @Step("Click add new component")
+    @Step("Click [Add new] component")
     public CreateComponentPageSteps clickAddComponent() {
         return new CreateComponentPageSteps(singleProjectPage.clickAddComponent());
     }
@@ -33,7 +33,7 @@ public class SingleProjectPageSteps {
         return this;
     }
 
-    @Step
+    @Step("Open last component")
     public CreateComponentPageSteps openLastComponent() {
         return new CreateComponentPageSteps(singleProjectPage.openLastComponent());
     }
