@@ -29,12 +29,15 @@ public class DemoChatTests extends BaseTest {
 
     @Test
     public void removeUserNameTest() {
-        demoChatSteps.fillInUserName(Data.USER_NAME).fillInUserName("").checkMainName(Data.DEFAULT_NAME);
+        demoChatSteps.fillInUserName(Data.USER_NAME)
+                .fillInUserName("")
+                .checkMainName(Data.DEFAULT_NAME);
     }
 
     @Test(dataProvider = "Data-Provider-Function")
     public void sendFileTest(String path, String fileName) {
-        demoChatSteps.clickDragAndDropButton().addFile(System.getProperty("user.dir") + path)
+        demoChatSteps.clickDragAndDropButton()
+                .addFile(System.getProperty("user.dir") + path)
                 .clickStartButton()
                 .checkLastAttachment(fileName);
     }

@@ -1,4 +1,4 @@
-<suite name="Test-class Suite" parallel="tests" thread-count="2">
+<suite name="Test-class Suite" parallel="tests" thread-count="3">
     <test name="Project and components testing">
         <classes>
             <class name="ProjectTests"/>
@@ -7,6 +7,11 @@
     <test name="Demo chat testing">
         <classes>
             <class name="DemoChatTests" />
+        </classes>
+    </test>
+    <test name="Payment testing">
+        <classes>
+            <class name="PaymentTests" />
         </classes>
     </test>
 </suite>

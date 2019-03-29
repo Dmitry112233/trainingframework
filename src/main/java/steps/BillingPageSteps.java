@@ -4,8 +4,7 @@ import io.qameta.allure.Step;
 import pages.BillingPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
 
 
@@ -20,6 +19,11 @@ public class BillingPageSteps {
     @Step("Click [Add new] button")
     public AddNewCardPageSteps clickAddNewCardButton(){
         return new AddNewCardPageSteps(billingPage.clickAddNewCardButton());
+    }
+
+    @Step("Get number of cards")
+    public int getCardsNumber(){
+        return billingPage.getNumberOfCards();
     }
 
     @Step("Click [Remove] link for last card")
@@ -50,6 +54,6 @@ public class BillingPageSteps {
     public void checkLastCardNumberAndType(String number, String type){
         String lastCardNumberAndType = billingPage.getLastCardNumberAndType();
         assertThat("Last card number isn't equal", lastCardNumberAndType, containsString(number.substring(number.length()-4)));
-        assertThat("Last card type isn't equal", lastCardNumberAndType, containsString(type));
+        assertThat("Last card type isn't equal", lastCardNumberAndType, containsStringIgnoringCase(type));
     }
 }

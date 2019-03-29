@@ -25,7 +25,8 @@ public class ProjectTests extends BaseTest {
     @Test
     public void createProjectTest() {
         int projectNumber = loginPageSteps.logIn(Data.LOGIN_EMAIL, Data.LOGIN_PASSWORD).getProjectsNumber();
-        projectsPageSteps.clickAddProject()
+        projectsPageSteps.
+                clickAddProject()
                 .fillInProjectData(Data.PROJECT_NAME, Data.PROJECT_DESCRIPTION, Data.PROJECT_DOMAIN)
                 .checkDomainFieldsSize(Data.DOMAIN_FIELDS_NUMBER).clickCreateButton()
                 .checkProjectsNumber(projectNumber).openLastProject().clickEditLink()
@@ -35,18 +36,24 @@ public class ProjectTests extends BaseTest {
 
     @Test
     public void editProjectTest() {
-        loginPageSteps.logIn(Data.LOGIN_EMAIL, Data.LOGIN_PASSWORD).openLastProject()
-                .clickEditLink().fillInProjectData(Data.EDITING_PROJECT_NAME, Data.EDITING_PROJECT_DESCRIPTION
-                , Data.EDITING_PROJECT_DOMAIN).clickCreateButton().openLastProject().clickEditLink()
-                .checkProjectData(Data.EDITING_PROJECT_NAME, Data.EDITING_PROJECT_DESCRIPTION
-                        , Data.EDITING_PROJECT_DOMAIN);
+        loginPageSteps.logIn(Data.LOGIN_EMAIL, Data.LOGIN_PASSWORD)
+                .openLastProject()
+                .clickEditLink()
+                .fillInProjectData(Data.EDITING_PROJECT_NAME, Data.EDITING_PROJECT_DESCRIPTION, Data.EDITING_PROJECT_DOMAIN)
+                .clickCreateButton()
+                .openLastProject()
+                .clickEditLink()
+                .checkProjectData(Data.EDITING_PROJECT_NAME, Data.EDITING_PROJECT_DESCRIPTION, Data.EDITING_PROJECT_DOMAIN);
     }
 
     @Test(dataProvider = "components-name")
     public void addComponentTest(String select) {
-        loginPageSteps.logIn(Data.LOGIN_EMAIL, Data.LOGIN_PASSWORD).openLastProject()
-                .clickAddComponent().fillInComponentData(select, Data.COMPONENT_NAME)
-                .clickUpdateButton().checkLastComponentName(select).openLastComponent()
+        loginPageSteps.logIn(Data.LOGIN_EMAIL, Data.LOGIN_PASSWORD)
+                .openLastProject()
+                .clickAddComponent()
+                .fillInComponentData(select, Data.COMPONENT_NAME)
+                .clickUpdateButton().checkLastComponentName(select)
+                .openLastComponent()
                 .checkComponentData(select, Data.COMPONENT_NAME);
     }
 
@@ -61,10 +68,16 @@ public class ProjectTests extends BaseTest {
 
     @Test
     public void editComponent() {
-        loginPageSteps.logIn(Data.LOGIN_EMAIL, Data.LOGIN_PASSWORD).openLastProject()
-                .clickAddComponent().fillInComponentData(Data.SELECT_MULTIPARTY_VIDEO, Data.COMPONENT_NAME)
-                .clickUpdateButton().checkLastComponentName(Data.SELECT_MULTIPARTY_VIDEO).openLastComponent()
-                .typeComponentName(Data.EDITING_COMPONENT_NAME).clickUpdateButton().openLastComponent()
+        loginPageSteps.logIn(Data.LOGIN_EMAIL, Data.LOGIN_PASSWORD)
+                .openLastProject()
+                .clickAddComponent()
+                .fillInComponentData(Data.SELECT_MULTIPARTY_VIDEO, Data.COMPONENT_NAME)
+                .clickUpdateButton()
+                .checkLastComponentName(Data.SELECT_MULTIPARTY_VIDEO)
+                .openLastComponent()
+                .typeComponentName(Data.EDITING_COMPONENT_NAME)
+                .clickUpdateButton()
+                .openLastComponent()
                 .checkComponentData(Data.SELECT_MULTIPARTY_VIDEO, Data.EDITING_COMPONENT_NAME);
     }
 

@@ -41,12 +41,13 @@ public class Data {
     public static final String CARD_NAME = "Dzmitry Staravoitau";
     public static final String CARD_MONTH = "12";
     public static final String CARD_YEAR = "2022";
+    public static final String DEFAULT_MARK = "Default";
 
     public static final String VISA_NUMBER = "4242424242424242";
     public static final String VISA_TYPE = "Visa";
 
     public static final String MASTERCARD_NUMBER = "5555555555554444";
-    public static final String MASTERCARD_TYPE = "Mastercard";
+    public static final String MASTERCARD_TYPE = "MasterCard";
 
     public static final String AMERICAN_EXPRESS_NUMBER = "378282246310005";
     public static final String AMERICAN_EXPRESS_TYPE = "American Express";

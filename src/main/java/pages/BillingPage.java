@@ -13,10 +13,10 @@ public class BillingPage extends Page {
 
     private static final By ADD_NEW_BUTTON = By.xpath("//a[contains(text(),'Add new')]");
     private static final By CARDS_LIST = By.xpath("//div[@class='cards']/div");
-    private static final By CARD_NUMBER_AND_TYPE = By.xpath("//div[@class='col-md-7']");
-    private static final By MAKE_DEFAULT_LINK = By.xpath("//div[@class='col-md-3']/a");
-    private static final By DEFAULT_MARK = By.xpath("//div[@class='col-md-3']");
-    private static final By REMOVE_LINK = By.xpath("//div[@class='col-md-2']/a");
+    private static final By CARD_NUMBER_AND_TYPE = By.xpath("./div[@class='col-md-7']");
+    private static final By MAKE_DEFAULT_LINK = By.xpath("./div[@class='col-md-3']/a");
+    private static final By DEFAULT_MARK = By.xpath("./div[@class='col-md-3']");
+    private static final By REMOVE_LINK = By.xpath("./div[@class='col-md-2']/a");
 
     public BillingPage(WebDriver driver) {
         super(driver);
@@ -27,13 +27,16 @@ public class BillingPage extends Page {
         return driver.findElements(CARDS_LIST);
     }
 
+    public int getCardsSize(){
+        return getCards().size();
+    }
+
     private WebElement getLastCard(){
         List<WebElement> cards = getCards();
         return cards.get(cards.size()-1);
     }
 
     public String getLastCardNumberAndType(){
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(CARD_NUMBER_AND_TYPE));
         String cardNumberAndType = getLastCard().findElement(CARD_NUMBER_AND_TYPE).getText();
         log.info("Get last card number and type: " + cardNumberAndType);
         return cardNumberAndType;
@@ -52,13 +55,11 @@ public class BillingPage extends Page {
     }
 
     public BillingPage removeLastCard(){
-        wait.until(ExpectedConditions.presenceOfElementLocated(REMOVE_LINK));
         getLastCard().findElement(REMOVE_LINK).click();
         return this;
     }
 
     public BillingPage clickMakeDefaultLastCard(){
-        wait.until(ExpectedConditions.presenceOfElementLocated(MAKE_DEFAULT_LINK));
         getLastCard().findElement(MAKE_DEFAULT_LINK).click();
         return this;
     }
