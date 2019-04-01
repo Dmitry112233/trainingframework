@@ -14,4 +14,9 @@
             <class name="PaymentTests" />
         </classes>
     </test>
+    <test name="REST API methods tests">
+        <classes>
+            <class name="UsersApiTests" />
+        </classes>
+    </test>
 </suite>

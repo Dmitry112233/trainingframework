@@ -1,30 +1,55 @@
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.json.JSONObject;
+import models.Company;
+import models.Credential;
+import models.User;
 import org.testng.annotations.Test;
+import utils.RestApiUtil;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.samePropertyValuesAs;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
+
 
 public class UsersApiTests {
 
+    String email;
+
     @Test
     public void doRegisterTest() {
-        String randomStr = RandomStringUtils.randomAlphabetic(7);
-        String email = randomStr + "@mail.com";
+        Credential credential = new Credential();
+        RestApiUtil restApiUtil = new RestApiUtil();
 
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("name", randomStr)
-                .put("password", randomStr)
-                .put("email", email);
+        Credential responseCredential = credential.getCredentialFromResponse(restApiUtil.
+                sendRequest("http://users.bugred.ru/tasks/rest/doregister ", credential.createCredentialJson()));
 
-        Response response = RestAssured.given().header("Content-Type", "application/json").
-                body(requestBody.toString()).post("http://users.bugred.ru/tasks/rest/doregister");
+        assertThat(responseCredential, is(equalTo(credential)));
+        assertThat(200, is(equalTo(restApiUtil.getStatusCode())));
 
-        assertThat(response.path("name"), is(equalTo(randomStr)));
-        assertThat(response.path("email"), is(equalTo(email)));
-        assertThat(response.getStatusCode(), is(equalTo(200)));
     }
+
+    @Test
+    public void createUser() {
+        User user = new User();
+        RestApiUtil restApiUtil = new RestApiUtil();
+
+        User responseUser = user.getUserFromResponse(restApiUtil
+                .sendRequest("http://users.bugred.ru/tasks/rest/createuser", user.createUserJson()));
+        this.email = responseUser.getEmail();
+
+        assertThat(responseUser, samePropertyValuesAs(user));
+        assertThat(200, is(equalTo(restApiUtil.getStatusCode())));
+
+    }
+
+    @Test(dependsOnMethods = "createUser")
+    public void createCompanyTest() {
+        Company company = new Company(email);
+        RestApiUtil restApiUtil = new RestApiUtil();
+        Company responseCompany = company.getCompanyFromResponse(restApiUtil
+                .sendRequest("http://users.bugred.ru/tasks/rest/createcompany", company.createCompanyJson()));
+
+        assertThat(responseCompany, is(equalTo(company)));
+        assertThat(200, is(equalTo(restApiUtil.getStatusCode())));
+    }
+
 }
